@@ -1,0 +1,4 @@
+export const  AUTH_TOKEN = "AUTH_TOKEN";
+export const  DELETE_TOKEN = "DELETE_TOKEN";
+export const  BASECAKES_LIST = "BASECAKES_LIST";
+export const  INGREDIENTS_LIST = "INGREDIENTS_LIST";
