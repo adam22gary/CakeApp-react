@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { createBaseCake, fetchIngredients } from "../../actions";
+import { fetchEditBaseCakes, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm, change } from "redux-form";
 import Input from "./fields/Input";
@@ -15,14 +15,15 @@ const minValue5 = minValue(5);
 // array for ingredients
 const arr = [];
 
-class BaseCakeForm extends Component {
+class BaseCakeEditForm extends Component {
     state = {
         ingredients_array: []
     }
 
-    onFormSubmit = async (formValues) => {
+    onFormSubmit = async (formValues,id) => {
         const { recipe_name, total_people, description, ingredients_array } = formValues;
-        await this.props.createBaseCake(recipe_name, total_people, description, ingredients_array);
+        //change
+        await this.props.updateBaseCake(recipe_name, total_people, description, ingredients_array, id);
         this.props.reset();
         //clear value after submit
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
@@ -75,19 +76,18 @@ class BaseCakeForm extends Component {
     }
 
     componentDidMount() {
+        //maybe change
         this.props.fetchIngredients();
-        //this.props.initialize({ ingredients_array: "jnj" });
-    }
-    componentDidUpdate() {
-        //     this.props.dispatch(change('baseCake', 'ingredients_array', null));
-        //     this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
-        //     this.props.dispatch(untouch('baseCake', 'ingredients_array'));
+        this.props.fetchEditBaseCakes(this.props.sendID);
+        // const { baseCakes } = this.props;
+        // console.log(baseCakes.recipe_name );
+        // this.props.initialize({ recipe_name: baseCakes.recipe_name });
     }
 
     render() {
         const { handleSubmit, ingredients } = this.props;
-
         return(
+            //need to send id
             <form onSubmit={handleSubmit(this.onFormSubmit)}>
                 <div>
                     <label>Name of recipe</label>
@@ -95,6 +95,7 @@ class BaseCakeForm extends Component {
                         name="recipe_name"
                         component={Input}
                         type="text"
+                        //value={baseCakes.recipe_name}
                     />
                     <label>How many does this recipe make</label>
                     <Field
@@ -111,6 +112,7 @@ class BaseCakeForm extends Component {
                     />
                     <label>Please select the ingredients</label>
                     <ul>
+                        
                         {ingredients.map((item, index) => {
                             return (
                                 <li key={item._id}>
@@ -133,7 +135,6 @@ class BaseCakeForm extends Component {
                         id="ingredients_array"
                         component={"input"}
                         type="hidden"
-                        //validate={[ required ]}
                     />
                 </div>
                 <input type="submit" value="Create" />
@@ -163,12 +164,16 @@ const WrappedBaseCakeForm = reduxForm({
 
         return errors;
     }
-})(BaseCakeForm);
+})(BaseCakeEditForm);
 
 const mapStateToProps = (state) => {
+    //console.log(state.baseCakes[0].recipe_name);
     return {
-        ingredients: state.ingredients
+        ingredients: state.ingredients,
+        initialValues: state.baseCakes
+        
+
     }
 }
 
-export default connect(mapStateToProps, { createBaseCake, fetchIngredients })(WrappedBaseCakeForm);
+export default connect(mapStateToProps, { fetchEditBaseCakes, fetchIngredients })(WrappedBaseCakeForm);

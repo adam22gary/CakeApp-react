@@ -20,6 +20,7 @@ export const logoutAuthToken = () => {
 
 //basecake Section!!!!!!!!!!!!!!!!!!!!
 export const setBaseCakes = (baseCakes) => {
+    console.log(baseCakes);
     return {
         type: BASECAKES_LIST,
         payload: baseCakes
@@ -33,10 +34,37 @@ export const fetchBaseCakes = () => {
     }
 }
 
-export const createBaseCake = (recipe_name, recipe_makes_number, description, method, ingredients_array) => {
-    console.log("dd");
+export const fetchShowBaseCakes = (id) => {
     return async (dispatch, getState) => {
-        const response = await LocalAPI.post(`/baseCakes`, { recipe_name, recipe_makes_number, description, method, ingredients_array });
+        const response = await LocalAPI.get(`/baseCakes/show/${id}`);
+        dispatch(setBaseCakes(response.data));
+    }
+}
+
+export const createBaseCake = (recipe_name, total_people, description, ingredients_array) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.post(`/baseCakes`, { recipe_name, total_people, description, ingredients_array });
+        dispatch(setBaseCakes(response.data));
+    } 
+}
+
+// export const updateBaseCake = (recipe_name, total_people, description, ingredients_array, id) => {
+//     return async (dispatch, getState) => {
+//         const response = await LocalAPI.put(`/baseCakes/edit/${id}`, { recipe_name, total_people, description, ingredients_array });
+//         dispatch(setBaseCakes(response.data));
+//     } 
+// }
+
+export const fetchEditBaseCakes = (id) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.get(`/baseCakes/edit/${id}`);
+        dispatch(setBaseCakes(response.data));
+    } 
+}
+
+export const deleteBaseCake = (id) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.delete(`/baseCakes/${id}`);
         dispatch(setBaseCakes(response.data));
     } 
 }
@@ -59,6 +87,13 @@ export const fetchIngredients = () => {
 export const createIngredient = (ingredients_name, ingredients_quantity, ingredients_measurement, ingredients_price) => {
     return async (dispatch, getState) => {
         const response = await LocalAPI.post(`/ingredients`, { ingredients_name, ingredients_quantity, ingredients_measurement, ingredients_price });
+        dispatch(setIngredients(response.data));
+    } 
+}
+
+export const deleteIngredient = (item) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.delete(`/ingredients/${item}`);
         dispatch(setIngredients(response.data));
     } 
 }

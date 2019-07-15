@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchIngredients } from "../../actions";
+import { fetchIngredients, deleteIngredient } from "../../actions";
 
 class IngredientsPage extends Component {
-
+    onDeleteItem = async (item) => {
+        await this.props.deleteIngredient(item);
+    }
     componentDidMount() {
         this.props.fetchIngredients();
     }
@@ -27,7 +29,7 @@ class IngredientsPage extends Component {
                                  {item.ingredients_quantity }
                                  {item.ingredients_measurement }
                                  {item.ingredients_price }
-                                 <button>Delete this item(add a closure function with id)and(are you sure)</button>
+                                 <button onClick={() => window.confirm("Are you sure you wish to delete this item?") && this.onDeleteItem(item._id)}>Delete this item</button>
                             </li>
                         );
                     })}
@@ -43,4 +45,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchIngredients })(IngredientsPage);
+export default connect(mapStateToProps, { fetchIngredients, deleteIngredient })(IngredientsPage);

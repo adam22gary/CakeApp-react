@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import BaseCakeForm from "./../forms/BaseCakeForm";
+import BaseCakeEditForm from "./../forms/BaseCakeEditForm";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchBaseCakes, deleteBaseCake } from "../../actions";
+import { deleteBaseCake } from "../../actions";
 
-class BaseCakesNew extends Component {
+class BaseCakesEdit extends Component {
     onDeleteItem = async (id) => {
         await this.props.deleteBaseCake(id);
     }
@@ -14,7 +14,6 @@ class BaseCakesNew extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchBaseCakes();
     }
 
     render() {
@@ -22,10 +21,10 @@ class BaseCakesNew extends Component {
 
         return (
             <>
-                <h2>Create A New BaseCake Recipe</h2>
-                <BaseCakeForm onBaseCakeFormSubmit={this.onBaseCakeFormSubmit} />
+                <h2>Edit a current BaseCake Recipe</h2>
+                <BaseCakeEditForm onBaseCakeFormSubmit={this.onBaseCakeFormSubmit} sendID={this.props.match.params.id} />
                 <h2>My current BaseCake Recipes</h2>
-                <ul>
+                {/* <ul>
                     {baseCakes.map((item, index) => {
                         return (
                             <li key={item._id}>
@@ -38,7 +37,7 @@ class BaseCakesNew extends Component {
                             </li>
                         );
                     })}
-                </ul>
+                </ul> */}
             </>
         );
     }
@@ -46,8 +45,8 @@ class BaseCakesNew extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        baseCakes: state.baseCakes
+        // baseCakes: state.baseCakes
     }
 }
 
-export default connect(mapStateToProps, { fetchBaseCakes, deleteBaseCake })(BaseCakesNew);
+export default connect(mapStateToProps, { deleteBaseCake })(BaseCakesEdit);

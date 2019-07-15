@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchBaseCakes } from "../../actions";
+import { fetchBaseCakes, deleteBaseCake } from "../../actions";
 
 class BaseCakesPage extends Component {
+    onDeleteItem = async (id) => {
+        await this.props.deleteBaseCake(id);
+    }
 
     componentDidMount() {
         this.props.fetchBaseCakes();
@@ -19,20 +22,20 @@ class BaseCakesPage extends Component {
                     <button>Create A New BaseCake Recipe</button>
                 </Link>
                 <h2>View all my BaseCake Recipes</h2>
-                {console.log(baseCakes)}
                 <ul>
                     {baseCakes.map((item, index) => {
                         return (
                             <li key={item._id}>
                                  {item.recipe_name }
-                                 {item.recipe_makes_number }
+                                 {item.total_people }
                                  {item.description }
-                                 {item.method }
-                                 {item.ingredients_array }
-
-                                 <button>View this item(use link to)</button>
-                                 <button>Edit this item(use link to)</button>
-                                 <button>Delete this item(add a closure function with id)and(are you sure)</button>
+                                 <Link to={`/baseCakes/show/${item._id}`}>
+                                    <button>View Cake</button>
+                                 </Link>
+                                 <Link to={`/baseCakes/edit/${item._id}`}>
+                                    <button>Edit Cake</button>
+                                 </Link>
+                                 <button onClick={() => window.confirm("Are you sure you wish to delete this cake?") && this.onDeleteItem(item._id)}>Delete this cake</button>
                             </li>
                         );
                     })}
@@ -48,4 +51,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchBaseCakes })(BaseCakesPage);
+export default connect(mapStateToProps, { fetchBaseCakes, deleteBaseCake })(BaseCakesPage);

@@ -6,7 +6,9 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import BaseCakesPage from "./pages/BaseCakesPage";
+import BaseCakesShow from "./pages/BaseCakesShow";
 import BaseCakesNew from "./pages/BaseCakesNew";
+import BaseCakesEdit from "./pages/BaseCakesEdit";
 import IngredientsPage from "./pages/IngredientsPage";
 import IngredientsNew from "./pages/IngredientsNew";
 import PrivateRoute from "./PrivateRoute";
@@ -66,7 +68,9 @@ class App extends Component {
                             component={LoginPage}
                         />
                         <PrivateRoute exact path="/baseCakes" component={BaseCakesPage} />
-                        <PrivateRoute exact path="/baseCakes/new" component={BaseCakesNew} />
+                        <PrivateRoute exact path="/baseCakes/show/:id" component={BaseCakesShow} />
+                        <PrivateRoute exact path="/baseCakes/new/" component={BaseCakesNew} />
+                        <PrivateRoute exact path="/baseCakes/edit/:id" component={BaseCakesEdit} />
                         <PrivateRoute exact path="/ingredients/" component={IngredientsPage} />
                         <PrivateRoute exact path="/ingredients/new" component={IngredientsNew} />
                         <Route component={NotFoundPage} />
