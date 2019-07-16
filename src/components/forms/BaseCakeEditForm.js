@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { fetchEditBaseCakes, fetchIngredients } from "../../actions";
+//import {  } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm, change } from "redux-form";
 import Input from "./fields/Input";
@@ -52,7 +52,6 @@ class BaseCakeEditForm extends Component {
             }
         }else{
             document.getElementById(id).innerHTML = "$" + (parseFloat(getValue[0].value) * parseFloat(price)).toFixed(2);
-            console.log(id);
             //delete current
             for( let i = 0; i < arr.length; i++){
                 if ( arr[i][0] === id) {
@@ -63,7 +62,6 @@ class BaseCakeEditForm extends Component {
                 //replace with new value
                 arr.push([id, getValue[0].value]);
             }
-            console.log(arr);
         }
         //convert to json string
         const arrValue = JSON.stringify(arr);
@@ -75,17 +73,10 @@ class BaseCakeEditForm extends Component {
         this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
     }
 
-    componentDidMount() {
-        //maybe change
-        this.props.fetchIngredients();
-        this.props.fetchEditBaseCakes(this.props.sendID);
-        // const { baseCakes } = this.props;
-        // console.log(baseCakes.recipe_name );
-        // this.props.initialize({ recipe_name: baseCakes.recipe_name });
-    }
-
     render() {
-        const { handleSubmit, ingredients } = this.props;
+        const { handleSubmit, ingredients, subBaseCakes } = this.props;
+        //const yy = subBaseCakes.ingredients_array.split("[]");
+        //console.log(yy);
         return(
             //need to send id
             <form onSubmit={handleSubmit(this.onFormSubmit)}>
@@ -117,6 +108,8 @@ class BaseCakeEditForm extends Component {
                             return (
                                 <li key={item._id}>
                                     <label htmlFor={item._id}>{item.ingredients_name}</label>
+                                    {item.id}
+                                    {/* //<input type="text" name={item._id} value="" /> */}
                                     <Field
                                         name={item._id}
                                         component={Input}
@@ -166,14 +159,4 @@ const WrappedBaseCakeForm = reduxForm({
     }
 })(BaseCakeEditForm);
 
-const mapStateToProps = (state) => {
-    //console.log(state.baseCakes[0].recipe_name);
-    return {
-        ingredients: state.ingredients,
-        initialValues: state.baseCakes
-        
-
-    }
-}
-
-export default connect(mapStateToProps, { fetchEditBaseCakes, fetchIngredients })(WrappedBaseCakeForm);
+export default connect(null)(WrappedBaseCakeForm);

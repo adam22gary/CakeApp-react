@@ -4,11 +4,20 @@ import { connect } from "react-redux";
 import { fetchBaseCakes, deleteBaseCake } from "../../actions";
 
 class BaseCakesPage extends Component {
+    defaultState = { data: null, error: null };
+    constructor(props) {
+        super(props);
+    
+        // Set the default state immediately
+        this.state = this.defaultState;
+    }
+
     onDeleteItem = async (id) => {
         await this.props.deleteBaseCake(id);
     }
 
     componentDidMount() {
+        this.setState();
         this.props.fetchBaseCakes();
     }
 

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { createBaseCake, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
-import { Field, reduxForm, change } from "redux-form";
+import { Field, reduxForm, change, formValueSelector } from "redux-form";
 import Input from "./fields/Input";
 
 //validation
@@ -12,8 +12,8 @@ const minValue = min => value =>
 const minValue1 = minValue(0.5);
 const minValue5 = minValue(5);
 
-// array for ingredients
-const arr = [];
+// object for ingredients
+const obj = {};
 
 class BaseCakeForm extends Component {
     state = {
@@ -28,44 +28,21 @@ class BaseCakeForm extends Component {
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
     }
 
-    calculate = async (id, price) => {
+    calculate = (event, id, price) => {
         //clear value first
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
-        
-        const getValue = await document.getElementsByName(id);
+        const getValue = event.target.value;
 
-        // checks within a two dimensional array
-        function exists(arr, val) {
-            return arr.some(row => row.includes(val));
-        }
-
-        if(getValue[0].value === "" || getValue[0].value < 0.5){
-            document.getElementById(id).innerHTML = "";
-
-            if(arr.length > 0){
-                for( let i = 0; i < arr.length; i++){
-                    if ( arr[i][0] === id) {
-                      arr.splice(i, 1);
-                    }
-                }
-            }
+        if(getValue === "" || getValue < 0.5){
+            delete obj[id];
         }else{
-            document.getElementById(id).innerHTML = "$" + (parseFloat(getValue[0].value) * parseFloat(price)).toFixed(2);
-            console.log(id);
-            //delete current
-            for( let i = 0; i < arr.length; i++){
-                if ( arr[i][0] === id) {
-                    arr.splice(i, 1);
-                }
-            }
-            if(exists(arr, id) === false){
-                //replace with new value
-                arr.push([id, getValue[0].value]);
-            }
-            console.log(arr);
+
+            obj[id]= getValue;        
+                
         }
+        console.log(obj);
         //convert to json string
-        const arrValue = JSON.stringify(arr);
+        const arrValue = JSON.stringify(obj);
         //for testing display only
         document.getElementById("forDisplay").innerHTML = arrValue; 
         //update state
@@ -119,10 +96,10 @@ class BaseCakeForm extends Component {
                                         name={item._id}
                                         component={Input}
                                         type="number"
-                                        onChange={() => this.calculate(item._id, item.ingredients_price)}
+                                        onChange={(event) => this.calculate(event,item._id, item.ingredients_price)}
                                         validate={[ minValue1 ]}
                                     />{item.ingredients_measurement}
-                                    <div id={item._id}>$</div>
+                                    <div id={item._id}>${(this.props[item._id] * item.ingredients_price) > 0 ? (this.props[item._id] * item.ingredients_price) : 0}</div>
                                 </li>
                             );
                         })}
@@ -133,7 +110,6 @@ class BaseCakeForm extends Component {
                         id="ingredients_array"
                         component={"input"}
                         type="hidden"
-                        //validate={[ required ]}
                     />
                 </div>
                 <input type="submit" value="Create" />
@@ -165,9 +141,18 @@ const WrappedBaseCakeForm = reduxForm({
     }
 })(BaseCakeForm);
 
+const selector = formValueSelector('baseCake');
+
 const mapStateToProps = (state) => {
+    const formMapping = {};
+
+    state.ingredients.forEach((item) => {
+        formMapping[item._id] = selector(state, item._id);
+    });
+    
     return {
-        ingredients: state.ingredients
+        ingredients: state.ingredients,
+        ...formMapping
     }
 }
 

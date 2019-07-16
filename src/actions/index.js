@@ -1,4 +1,4 @@
-import { AUTH_TOKEN, DELETE_TOKEN, BASECAKES_LIST, INGREDIENTS_LIST } from "./types";
+import { AUTH_TOKEN, DELETE_TOKEN, BASECAKES_LIST, BASECAKES_EDIT_LIST, INGREDIENTS_LIST } from "./types";
 import LocalAPI from "./../apis/local";
 
 //use for register and login
@@ -55,10 +55,19 @@ export const createBaseCake = (recipe_name, total_people, description, ingredien
 //     } 
 // }
 
+export const setEditBaseCakes = (editBaseCakes) => {
+    console.log(editBaseCakes);
+    return {
+        type: BASECAKES_EDIT_LIST,
+        payload: editBaseCakes
+    };
+} 
+
 export const fetchEditBaseCakes = (id) => {
     return async (dispatch, getState) => {
         const response = await LocalAPI.get(`/baseCakes/edit/${id}`);
-        dispatch(setBaseCakes(response.data));
+        //console.log(response.data);
+        dispatch(setEditBaseCakes(response.data));
     } 
 }
 

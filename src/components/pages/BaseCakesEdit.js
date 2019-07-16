@@ -1,52 +1,38 @@
 import React, { Component } from "react";
 import BaseCakeEditForm from "./../forms/BaseCakeEditForm";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteBaseCake } from "../../actions";
+import { deleteBaseCake, fetchEditBaseCakes, fetchIngredients } from "../../actions";
 
 class BaseCakesEdit extends Component {
     onDeleteItem = async (id) => {
         await this.props.deleteBaseCake(id);
     }
 
-    onBaseCakeFormSubmit = (baseCakes) => {
-        this.setState({ baseCakes });
+    onBaseCakeFormSubmit = (editBaseCakes) => {
+        this.setState({ editBaseCakes });
     }
 
     componentDidMount() {
+        this.props.fetchIngredients();
+        this.props.fetchEditBaseCakes(this.props.match.params.id);
     }
 
     render() {
-        const { baseCakes } = this.props;
-
+        const { editBaseCakes, ingredients } = this.props;
         return (
             <>
                 <h2>Edit a current BaseCake Recipe</h2>
-                <BaseCakeEditForm onBaseCakeFormSubmit={this.onBaseCakeFormSubmit} sendID={this.props.match.params.id} />
-                <h2>My current BaseCake Recipes</h2>
-                {/* <ul>
-                    {baseCakes.map((item, index) => {
-                        return (
-                            <li key={item._id}>
-                                 {item.recipe_name }
-                                 <Link to={`/baseCakes/show/${item._id}`}>
-                                    <button>View Cake</button>
-                                 </Link>
-                                 <button>Edit this item(use link to)</button>
-                                 <button onClick={() => window.confirm("Are you sure you wish to delete this cake?") && this.onDeleteItem(item._id)}>Delete this cake</button>
-                            </li>
-                        );
-                    })}
-                </ul> */}
+                <BaseCakeEditForm onBaseCakeFormSubmit={this.onBaseCakeFormSubmit} ingredients={ingredients} initialValues={editBaseCakes} />
             </>
         );
     }
 }
-
 const mapStateToProps = (state) => {
     return {
-        // baseCakes: state.baseCakes
+        ingredients: state.ingredients,
+        editBaseCakes: state.editBaseCakes
     }
 }
 
-export default connect(mapStateToProps, { deleteBaseCake })(BaseCakesEdit);
+export default connect(mapStateToProps, { deleteBaseCake, fetchEditBaseCakes, fetchIngredients })(BaseCakesEdit);
