@@ -33,7 +33,9 @@ class BaseCakesNew extends Component {
                                  <Link to={`/baseCakes/show/${item._id}`}>
                                     <button>View Cake</button>
                                  </Link>
-                                 <button>Edit this item(use link to)</button>
+                                 <Link to={`/baseCakes/edit/${item._id}`}>
+                                    <button>Edit Cake</button>
+                                 </Link>
                                  <button onClick={() => window.confirm("Are you sure you wish to delete this cake?") && this.onDeleteItem(item._id)}>Delete this cake</button>
                             </li>
                         );

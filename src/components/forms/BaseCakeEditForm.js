@@ -1,8 +1,9 @@
 import React, {Component} from "react";
-//import {  } from "../../actions";
+import { updateBaseCake, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
-import { Field, reduxForm, change } from "redux-form";
+import { Field, reduxForm, change, formValueSelector } from "redux-form";
 import Input from "./fields/Input";
+import history from "./../../history";
 
 //validation
 const required = value => value ? undefined : 'Required';
@@ -13,72 +14,80 @@ const minValue1 = minValue(0.5);
 const minValue5 = minValue(5);
 
 // array for ingredients
-const arr = [];
+const obj = {};
 
 class BaseCakeEditForm extends Component {
     state = {
         ingredients_array: []
     }
 
-    onFormSubmit = async (formValues,id) => {
-        const { recipe_name, total_people, description, ingredients_array } = formValues;
+    onFormSubmit = async (formValues) => {
+        const { recipe_name, total_people, description } = formValues;
         //change
-        await this.props.updateBaseCake(recipe_name, total_people, description, ingredients_array, id);
-        this.props.reset();
-        //clear value after submit
-        this.props.dispatch(change('baseCake', 'ingredients_array', []));
+        await this.props.updateBaseCake(recipe_name, total_people, description, this.state.ingredients_array, this.props.editAddIngredientsBaseCakes._id);
+        history.push("/baseCakes");
     }
 
-    calculate = async (id, price) => {
+    calculate = (event, id) => {
         //clear value first
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
-        
-        const getValue = await document.getElementsByName(id);
+        const getValue = event.target.value;
 
-        // checks within a two dimensional array
-        function exists(arr, val) {
-            return arr.some(row => row.includes(val));
-        }
-
-        if(getValue[0].value === "" || getValue[0].value < 0.5){
-            document.getElementById(id).innerHTML = "";
-
-            if(arr.length > 0){
-                for( let i = 0; i < arr.length; i++){
-                    if ( arr[i][0] === id) {
-                      arr.splice(i, 1);
-                    }
-                }
-            }
+        if(getValue === "" || getValue < 0.5){
+            delete obj[id];
         }else{
-            document.getElementById(id).innerHTML = "$" + (parseFloat(getValue[0].value) * parseFloat(price)).toFixed(2);
-            //delete current
-            for( let i = 0; i < arr.length; i++){
-                if ( arr[i][0] === id) {
-                    arr.splice(i, 1);
-                }
-            }
-            if(exists(arr, id) === false){
-                //replace with new value
-                arr.push([id, getValue[0].value]);
-            }
+
+            obj[id]= getValue;        
+                
         }
         //convert to json string
-        const arrValue = JSON.stringify(arr);
+        // const arrValue = JSON.stringify(obj);
+        // console.log(typeof arrValue);
+        // console.log(arrValue);
         //for testing display only
-        document.getElementById("forDisplay").innerHTML = arrValue; 
+        document.getElementById("forDisplay").innerHTML = obj[0]; 
         //update state
-        this.setState({ingredients_array: arrValue});
+        this.setState({ingredients_array: obj});
+        // console.log(this.state.ingredients_array);
         //add value to field
-        this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
+        //this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
+
+    }
+
+    componentDidMount() {
+        this.props.fetchIngredients();
+        const { editAddIngredientsBaseCakes } = this.props;
+        //add ingredients to the obj object in calculate onload 
+        if (editAddIngredientsBaseCakes && Object.keys(editAddIngredientsBaseCakes).length > 0) {
+            //const iii = JSON.parse(editAddIngredientsBaseCakes.ingredients_array);
+            for(let item in editAddIngredientsBaseCakes.ingredients_array){
+                obj[item] = editAddIngredientsBaseCakes.ingredients_array[item];
+                //this.setState({ingredients_array[item]:  iii[item]});
+            }
+            this.setState({ingredients_array:  obj});
+            // console.log(this.state.ingredients_array);
+            // console.log("lllllllllllllllllllll");
+            
+        }
     }
 
     render() {
-        const { handleSubmit, ingredients, subBaseCakes } = this.props;
-        //const yy = subBaseCakes.ingredients_array.split("[]");
-        //console.log(yy);
+        // console.log(this.state.ingredients_array);
+        const { handleSubmit, ingredients } = this.props;
+        // console.log(this.props);
+        //add ingredients to the obj object in calculate onload 
+        // if (editAddIngredientsBaseCakes && Object.keys(editAddIngredientsBaseCakes).length > 0 && this.state.booleanIsOn) {
+        //     const iii = JSON.parse(editAddIngredientsBaseCakes.ingredients_array);
+        //     for(let item in iii){
+        //         obj[item] = iii[item];
+        //     }
+        //     this.setState({booleanIsOn: false});
+        //     console.log("hello");
+        // }
+
         return(
             //need to send id
+            
             <form onSubmit={handleSubmit(this.onFormSubmit)}>
                 <div>
                     <label>Name of recipe</label>
@@ -108,17 +117,15 @@ class BaseCakeEditForm extends Component {
                             return (
                                 <li key={item._id}>
                                     <label htmlFor={item._id}>{item.ingredients_name}</label>
-                                    {item.id}
-                                    {/* //<input type="text" name={item._id} value="" /> */}
                                     <Field
                                         name={item._id}
                                         component={Input}
                                         type="number"
-                                        onChange={() => this.calculate(item._id, item.ingredients_price)}
+                                        onChange={(event) => this.calculate(event,item._id)}
                                         validate={[ minValue1 ]}
                                     />{item.ingredients_measurement}
-                                    <div id={item._id}>$</div>
-                                </li>
+                                    <div id={item._id}>${(this.props[item._id] * item.ingredients_price) > 0 ? (this.props[item._id] * item.ingredients_price) : 0}</div>
+                                </li>                               
                             );
                         })}
                     </ul>
@@ -130,7 +137,7 @@ class BaseCakeEditForm extends Component {
                         type="hidden"
                     />
                 </div>
-                <input type="submit" value="Create" />
+                <input type="submit" value="Edit" />
             </form>
         );
     }
@@ -159,4 +166,19 @@ const WrappedBaseCakeForm = reduxForm({
     }
 })(BaseCakeEditForm);
 
-export default connect(null)(WrappedBaseCakeForm);
+const selector = formValueSelector('baseCake');
+
+const mapStateToProps = (state) => {
+    const formMapping = {};
+
+    state.ingredients.forEach((item) => {
+        formMapping[item._id] = selector(state, item._id);
+    });
+    
+    return {
+        ingredients: state.ingredients,
+        ...formMapping
+    }
+}
+
+export default connect(mapStateToProps, {updateBaseCake, fetchIngredients})(WrappedBaseCakeForm);
