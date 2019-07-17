@@ -48,20 +48,19 @@ export const createBaseCake = (recipe_name, total_people, description, ingredien
     } 
 }
 
-// export const updateBaseCake = (recipe_name, total_people, description, ingredients_array, id) => {
-//     return async (dispatch, getState) => {
-//         const response = await LocalAPI.put(`/baseCakes/edit/${id}`, { recipe_name, total_people, description, ingredients_array });
-//         dispatch(setBaseCakes(response.data));
-//     } 
-// }
-
 export const setEditBaseCakes = (editBaseCakes) => {
-    console.log(editBaseCakes);
     return {
         type: BASECAKES_EDIT_LIST,
         payload: editBaseCakes
     };
-} 
+}
+
+export const updateBaseCake = (recipe_name, total_people, description, ingredients_array, id) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.put(`/baseCakes/edit/${id}`, { recipe_name, total_people, description, ingredients_array });
+        dispatch(setEditBaseCakes(response.data));
+    } 
+}
 
 export const fetchEditBaseCakes = (id) => {
     return async (dispatch, getState) => {

@@ -28,7 +28,7 @@ class BaseCakeForm extends Component {
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
     }
 
-    calculate = (event, id, price) => {
+    calculate = (event, id) => {
         //clear value first
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
         const getValue = event.target.value;
@@ -40,25 +40,16 @@ class BaseCakeForm extends Component {
             obj[id]= getValue;        
                 
         }
-        console.log(obj);
-        //convert to json string
-        const arrValue = JSON.stringify(obj);
         //for testing display only
-        document.getElementById("forDisplay").innerHTML = arrValue; 
+        document.getElementById("forDisplay").innerHTML = obj[0]; 
         //update state
-        this.setState({ingredients_array: arrValue});
+        this.setState({ingredients_array: obj});
         //add value to field
         this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
     }
 
     componentDidMount() {
         this.props.fetchIngredients();
-        //this.props.initialize({ ingredients_array: "jnj" });
-    }
-    componentDidUpdate() {
-        //     this.props.dispatch(change('baseCake', 'ingredients_array', null));
-        //     this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
-        //     this.props.dispatch(untouch('baseCake', 'ingredients_array'));
     }
 
     render() {
@@ -96,7 +87,7 @@ class BaseCakeForm extends Component {
                                         name={item._id}
                                         component={Input}
                                         type="number"
-                                        onChange={(event) => this.calculate(event,item._id, item.ingredients_price)}
+                                        onChange={(event) => this.calculate(event,item._id)}
                                         validate={[ minValue1 ]}
                                     />{item.ingredients_measurement}
                                     <div id={item._id}>${(this.props[item._id] * item.ingredients_price) > 0 ? (this.props[item._id] * item.ingredients_price) : 0}</div>
