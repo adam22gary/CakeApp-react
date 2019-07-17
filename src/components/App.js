@@ -9,6 +9,10 @@ import BaseCakesPage from "./pages/BaseCakesPage";
 import BaseCakesShow from "./pages/BaseCakesShow";
 import BaseCakesNew from "./pages/BaseCakesNew";
 import BaseCakesEdit from "./pages/BaseCakesEdit";
+import OrdersPage from "./pages/Orders";
+import OrdersShow from "./pages/OrdersShow";
+import OrdersNew from "./pages/OrdersNew";
+import OrdersEdit from "./pages/OrdersEdit";
 import IngredientsPage from "./pages/IngredientsPage";
 import IngredientsNew from "./pages/IngredientsNew";
 import PrivateRoute from "./PrivateRoute";
@@ -36,13 +40,13 @@ class App extends Component {
                         <Link to="/baseCakes">
                             <button>BaseCakes</button>
                         </Link>
-                        <Link to="#">
+                        <Link to="/orders/new">
                             <button>Create New Order</button>
                         </Link>
-                        <Link to="#">
+                        <Link to="/orders">
                             <button>Current Orders</button>
                         </Link>
-                        <Link to="#">
+                        <Link to="/orders/history">
                             <button>Order History</button>
                         </Link>
                                 <button onClick={() => this.props.logoutAuthToken()}>Logout</button>
@@ -73,6 +77,10 @@ class App extends Component {
                         <PrivateRoute exact path="/baseCakes/edit/:id" component={BaseCakesEdit} />
                         <PrivateRoute exact path="/ingredients/" component={IngredientsPage} />
                         <PrivateRoute exact path="/ingredients/new" component={IngredientsNew} />
+                        <PrivateRoute exact path="/orders" component={OrdersPage} />
+                        <PrivateRoute exact path="/orders/show/:id" component={OrdersShow} />
+                        <PrivateRoute exact path="/orders/new" component={OrdersNew} />
+                        <PrivateRoute exact path="/orders/edit/:id" component={OrdersEdit} />
                         <Route component={NotFoundPage} />
                     </Switch>
                 </>
