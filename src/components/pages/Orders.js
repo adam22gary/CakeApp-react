@@ -1,35 +1,41 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchIngredients, deleteIngredient } from "../../actions";
+import { fetchOrders } from "../../actions";
 
-class IngredientsPage extends Component {
-    onDeleteItem = async (item) => {
-        await this.props.deleteIngredient(item);
+class Orders extends Component {
+    defaultState = { data: null, error: null };
+    constructor(props) {
+        super(props);
+    
+        // Set the default state immediately
+        this.state = this.defaultState;
     }
+
     componentDidMount() {
-        this.props.fetchIngredients();
+        this.setState();
+        this.props.fetchOrders();
     }
 
     render() {
-        const { ingredients } = this.props;
- 
+        const { orders } = this.props;
+
         return (
             <>
-                <h2>My ingredients</h2>
-                <Link to="/Ingredients/new">
-                    <button>Create A New Ingredient</button>
-                </Link>
-                <h2>View all my Ingredients</h2>
+                <h2>Current Orders</h2>
                 <ul>
-                    {ingredients.map((item, index) => {
+                    {orders.map((item, index) => {
                         return (
                             <li key={item._id}>
-                                 {item.ingredients_name }
-                                 {item.ingredients_quantity }
-                                 {item.ingredients_measurement }
-                                 {item.ingredients_price }
-                                 <button onClick={() => window.confirm("Are you sure you wish to delete this item?") && this.onDeleteItem(item._id)}>Delete this item</button>
+                                 {item.recipe_name }
+                                 {item.total_people }
+                                 {item.description }
+                                 <Link to={`/orders/show/${item._id}`}>
+                                    <button>View Order</button>
+                                 </Link>
+                                 <Link to={`/orders/edit/${item._id}`}>
+                                    <button>Edit Order</button>
+                                 </Link>
                             </li>
                         );
                     })}
@@ -41,8 +47,8 @@ class IngredientsPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        ingredients: state.ingredients
+        orders: state.orders
     }
 }
 
-export default connect(mapStateToProps, { fetchIngredients, deleteIngredient })(IngredientsPage);
+export default connect(mapStateToProps, { fetchOrders })(Orders);

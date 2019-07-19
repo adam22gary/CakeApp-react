@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchShowOrder } from "../../actions";
+import { fetchOrders } from "../../actions";
 
-class OrderShow extends Component {
-  
+class Orders extends Component {
+    defaultState = { data: null, error: null };
+    constructor(props) {
+        super(props);
+    
+        // Set the default state immediately
+        this.state = this.defaultState;
+    }
+
     componentDidMount() {
-        this.props.fetchShowOrders(this.props.match.params.id);
+        this.setState();
+        this.props.fetchOrders();
     }
 
     render() {
         const { orders } = this.props;
-        console.log(orders)
+
         return (
             <>
                 <h2>Past Orders</h2>
@@ -22,6 +30,9 @@ class OrderShow extends Component {
                                  {item.recipe_name }
                                  {item.total_people }
                                  {item.description }
+                                 <Link to={`/orders/show/${item._id}`}>
+                                    <button>View Order</button>
+                                 </Link>
                                  <Link to={`/orders/edit/${item._id}`}>
                                     <button>Edit Order</button>
                                  </Link>
@@ -40,4 +51,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchShowOrder })(OrderShow);
+export default connect(mapStateToProps, { fetchOrders })(Orders);

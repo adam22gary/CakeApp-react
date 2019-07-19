@@ -1,4 +1,4 @@
-import { AUTH_TOKEN, DELETE_TOKEN, BASECAKES_LIST, BASECAKES_EDIT_LIST, INGREDIENTS_LIST, ORDERS_LIST } from "./types";
+import { AUTH_TOKEN, DELETE_TOKEN, BASECAKES_LIST, BASECAKES_EDIT_LIST, INGREDIENTS_LIST, ORDERS_LIST, ORDER_EDIT_LIST } from "./types";
 import LocalAPI from "./../apis/local";
 
 //use for register and login
@@ -121,11 +121,40 @@ export const setOrders = (orders) => {
     };
 } 
 
+export const setEditOrder = (editOrder) => {
+    return {
+        type: ORDER_EDIT_LIST,
+        payload: editOrder
+    };
+}
+
 export const fetchOrders = () => {
     return async (dispatch, getState) => {
         const response = await LocalAPI.get("/orders");
         dispatch(setOrders(response.data));
     }
+}
+
+export const fetchShowOrder = (id) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.get(`/baseCakes/show/${id}`);
+        dispatch(setOrders(response.data));
+    }
+}
+
+export const fetchEditOrder = (id) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.get(`/baseCakes/edit/${id}`);
+        //console.log(response.data);
+        dispatch(setEditOrder(response.data));
+    } 
+}
+
+export const updateOrder = (date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status, id) => {
+    return async (dispatch, getState) => {
+        const response = await LocalAPI.put(`/baseCakes/edit/${id}`, { date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status });
+        dispatch(setEditOrder(response.data));
+    } 
 }
 
 export const createOrder = (date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status) => {

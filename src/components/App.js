@@ -13,13 +13,13 @@ import OrdersPage from "./pages/Orders";
 import OrdersShow from "./pages/OrdersShow";
 import OrdersNew from "./pages/OrdersNew";
 import OrdersEdit from "./pages/OrdersEdit";
+import OrdersHistory from "./pages/OrdersHistory";
 import IngredientsPage from "./pages/IngredientsPage";
 import IngredientsNew from "./pages/IngredientsNew";
 import PrivateRoute from "./PrivateRoute";
 import history from "./../history";
 import { logoutAuthToken } from "../../src/actions";
 import { connect } from "react-redux";
-//import Input from "./forms/fields/Input";
 
 class App extends Component {
 
@@ -29,7 +29,7 @@ class App extends Component {
         return (
             <Router history={history}>
                 <>
-                    {token && <h4>{token}User Logged In!</h4>}
+                    {token && <h4>User Logged In!</h4>}
                     {(token && <div>
                         <Link to="/">
                             <button>Home</button>
@@ -47,7 +47,7 @@ class App extends Component {
                             <button>Current Orders</button>
                         </Link>
                         <Link to="/orders/history">
-                            <button>Order History</button>
+                            <button>Orders History</button>
                         </Link>
                                 <button onClick={() => this.props.logoutAuthToken()}>Logout</button>
                             </div>) || (<div>
@@ -81,6 +81,7 @@ class App extends Component {
                         <PrivateRoute exact path="/orders/show/:id" component={OrdersShow} />
                         <PrivateRoute exact path="/orders/new" component={OrdersNew} />
                         <PrivateRoute exact path="/orders/edit/:id" component={OrdersEdit} />
+                        <PrivateRoute exact path="/orders/history" component={OrdersHistory} />
                         <Route component={NotFoundPage} />
                     </Switch>
                 </>
