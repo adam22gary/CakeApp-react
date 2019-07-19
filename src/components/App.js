@@ -11,8 +11,9 @@ import BaseCakesNew from "./pages/BaseCakesNew";
 import BaseCakesEdit from "./pages/BaseCakesEdit";
 import OrdersPage from "./pages/Orders";
 import OrdersShow from "./pages/OrdersShow";
-import OrdersNew from "./pages/OrdersNew";
+import OrdersCurrent from "./pages/OrdersCurrent";
 import OrdersEdit from "./pages/OrdersEdit";
+import OrdersNew from "./pages/OrdersNew";
 import OrdersHistory from "./pages/OrdersHistory";
 import IngredientsPage from "./pages/IngredientsPage";
 import IngredientsNew from "./pages/IngredientsNew";
@@ -40,10 +41,10 @@ class App extends Component {
                         <Link to="/baseCakes">
                             <button>BaseCakes</button>
                         </Link>
-                        <Link to="/orders/new">
+                        <Link to="/orders">
                             <button>Create New Order</button>
                         </Link>
-                        <Link to="/orders">
+                        <Link to="/orders/current">
                             <button>Current Orders</button>
                         </Link>
                         <Link to="/orders/history">
@@ -77,9 +78,10 @@ class App extends Component {
                         <PrivateRoute exact path="/baseCakes/edit/:id" component={BaseCakesEdit} />
                         <PrivateRoute exact path="/ingredients/" component={IngredientsPage} />
                         <PrivateRoute exact path="/ingredients/new" component={IngredientsNew} />
-                        <PrivateRoute exact path="/orders" component={OrdersPage} />
+                        <PrivateRoute exact path="/orders/current" component={OrdersCurrent} />
                         <PrivateRoute exact path="/orders/show/:id" component={OrdersShow} />
-                        <PrivateRoute exact path="/orders/new" component={OrdersNew} />
+                        <PrivateRoute exact path="/orders/new/:id" component={OrdersNew} />
+                        <PrivateRoute exact path="/orders" component={OrdersPage} />
                         <PrivateRoute exact path="/orders/edit/:id" component={OrdersEdit} />
                         <PrivateRoute exact path="/orders/history" component={OrdersHistory} />
                         <Route component={NotFoundPage} />

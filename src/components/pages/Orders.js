@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchOrders } from "../../actions";
+import { fetchBaseCakes } from "../../actions";
 
 class Orders extends Component {
     defaultState = { data: null, error: null };
@@ -14,28 +14,22 @@ class Orders extends Component {
 
     componentDidMount() {
         this.setState();
-        this.props.fetchOrders();
+        this.props.fetchBaseCakes();
     }
 
     render() {
-        const { orders } = this.props;
+        const { baseCakes } = this.props;
 
         return (
             <>
-                <h2>Current Orders</h2>
+                <h3>Select Cake Base</h3>
                 <ul>
-                    {orders.map((item, index) => {
+                    {baseCakes.map((item, index) => {
                         return (
                             <li key={item._id}>
-                                 {item.recipe_name }
-                                 {item.total_people }
-                                 {item.description }
-                                 <Link to={`/orders/show/${item._id}`}>
-                                    <button>View Order</button>
-                                 </Link>
-                                 <Link to={`/orders/edit/${item._id}`}>
-                                    <button>Edit Order</button>
-                                 </Link>
+                                <Link to={`/orders/new/${item._id}`}>
+                                    {item.recipe_name}
+                                </Link>
                             </li>
                         );
                     })}
@@ -47,8 +41,8 @@ class Orders extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        orders: state.orders
+        baseCakes: state.baseCakes
     }
 }
 
-export default connect(mapStateToProps, { fetchOrders })(Orders);
+export default connect(mapStateToProps, { fetchBaseCakes })(Orders);
