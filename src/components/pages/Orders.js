@@ -7,7 +7,6 @@ class Orders extends Component {
     defaultState = { data: null, error: null };
     constructor(props) {
         super(props);
-    
         // Set the default state immediately
         this.state = this.defaultState;
     }

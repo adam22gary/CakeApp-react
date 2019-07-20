@@ -10,7 +10,7 @@ class OrdersEdit extends Component {
     render() {
         return (
             <>
-                <h2>Create New Order</h2>
+                <h2>Edit Order</h2>
                 <OrderForm onOrderFormSubmit={this.onOrderFormSubmit} />
             </>
         );
