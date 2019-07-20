@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { createIngredient } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
@@ -17,7 +17,7 @@ class IngredientForm extends Component {
         await this.props.createIngredient(ingredients_name, ingredients_quantity, ingredients_measurement, ingredients_price);
         this.props.reset();
     }
-
+    
     render() {
         const { handleSubmit } = this.props;
 

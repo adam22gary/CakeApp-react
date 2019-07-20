@@ -18,7 +18,7 @@ const obj = {};
 
 class BaseCakeEditForm extends Component {
     state = {
-        ingredients_array: {}
+        ingredients_array: []
     }
 
     onFormSubmit = async (formValues) => {

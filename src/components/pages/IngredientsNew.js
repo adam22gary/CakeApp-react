@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import IngredientForm from "./../forms/IngredientForm";
-//import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchIngredients, deleteIngredient } from "../../actions";
 
