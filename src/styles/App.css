@@ -2,26 +2,5 @@ input, label {
     display: block;
 }
 body{
-    background-color: rgb(253, 252, 241);
-    
-}
-.clear{
-    clear: both;
-    width: 100%;
-    padding: 20px 0;
-} 
-.homeclass {
-    text-align: center;
-    margin-top: 200px;
-    /* font-family: "Montserrat", sans-serif; */
-}
-.hometitle{
-    font-family: "Satisfy", sans-serif;
-    font-size: 50px;
-    padding: 20px 0;
-}
-.homeLinks{
-    /* font-family: 'Lobster', cursive; */
-    font-size: 20px;
-    text-align: center !important;
+    background-color: aqua;
 }

@@ -5,8 +5,7 @@ class RegisterPage extends Component {
     render() {
         return(
             <div>
-                <h1 className="hometitle">Cake Calculator</h1>
-                <h2>Register</h2>
+                <h1>Register a new user</h1>
                 <RegisterForm {...this.props} />
             </div>
         );

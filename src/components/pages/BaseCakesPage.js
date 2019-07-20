@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchBaseCakes, deleteBaseCake } from "../../actions";
-import { Button, Container, Header, Icon, Item } from 'semantic-ui-react';
 
 class BaseCakesPage extends Component {
     defaultState = { data: null, error: null };
@@ -27,52 +26,29 @@ class BaseCakesPage extends Component {
 
         return (
             <>
-                <h2>Create a new base cake recipe</h2>
+                <h2>Create A New BaseCake Recipe</h2>
                 <Link to="/baseCakes/new">
-                    <button className="ui primary button">Create a new base cake recipe</button>
+                    <button>Create A New BaseCake Recipe</button>
                 </Link>
-​
-                <Header as='h2' content='Responsive Item' textAlign='center' >My base cake recipes</Header>
-                <Container>
-​
-                <Item.Group divided>
-                        {baseCakes.map((item, index) => {
-                            return (
-                                    <Item key={item._id}>
-                                        <Item.Content>
-                                    <Item.Header as='a'>{item.recipe_name}</Item.Header>
-                                    <Item.Meta>
-                                        Total people: {item.total_people}
-                                    </Item.Meta>
-                                    <Item.Description>
-                                        {item.description}
-                                    </Item.Description>
-                                    <Item.Extra>
-                                        <Link to="#">
-                                            <Button floated='right' color='google plus' onClick={() => window.confirm("Are you sure you wish to delete this cake?") && this.onDeleteItem(item._id)}>
-                                                Delete this Cake
-                                            <Icon name='delete right' />
-                                            </Button>
-                                        </Link>
-                                        <Link to={`/baseCakes/edit/${item._id}`}>
-                                            <Button floated='right' primary>
-                                                Edit this Cake
-                                            <Icon name='edit right' />
-                                            </Button>
-                                        </Link>
-                                        <Link to={`/baseCakes/show/${item._id}`}>
-                                            <Button floated='right'color='teal'>
-                                                View this Cake
-                                            <Icon name='birthday cake right' />
-                                            </Button>
-                                        </Link>
-                                    </Item.Extra>
-                                </Item.Content>
-                            </Item>
-                            );
-                        })}
-                </Item.Group>
-            </Container>
+                <h2>View all my BaseCake Recipes</h2>
+                <ul>
+                    {baseCakes.map((item, index) => {
+                        return (
+                            <li key={item._id}>
+                                 {item.recipe_name }
+                                 {item.total_people }
+                                 {item.description }
+                                 <Link to={`/baseCakes/show/${item._id}`}>
+                                    <button>View Cake</button>
+                                 </Link>
+                                 <Link to={`/baseCakes/edit/${item._id}`}>
+                                    <button>Edit Cake</button>
+                                 </Link>
+                                 <button onClick={() => window.confirm("Are you sure you wish to delete this cake?") && this.onDeleteItem(item._id)}>Delete this cake</button>
+                            </li>
+                        );
+                    })}
+                </ul>
             </>
         );
     }
