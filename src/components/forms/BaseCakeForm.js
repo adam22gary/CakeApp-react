@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import { createBaseCake, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm, change, formValueSelector } from "redux-form";

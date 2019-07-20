@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import LocalAPI from "./../../apis/local";
 import { setAuthToken } from "./../../actions";
 import { connect } from "react-redux";

@@ -14,7 +14,7 @@ class OrderShow extends Component {
         console.log(orders)
         return (
             <>
-                <h2>Order</h2>
+                <h2>Past Orders</h2>
                 <ul>
                     {orders.map((item, index) => {
                         return (
@@ -24,12 +24,6 @@ class OrderShow extends Component {
                                  {item.description }
                                  <Link to={`/orders/edit/${item._id}`}>
                                     <button>Edit Order</button>
-                                 </Link>
-                                 <Link to={`/orders/edit/${item._id}`}>
-                                    <button>Order Complete</button>
-                                 </Link>
-                                 <Link to={`/orders/edit/${item._id}`}>
-                                    <button>Cancel Order</button>
                                  </Link>
                             </li>
                         );

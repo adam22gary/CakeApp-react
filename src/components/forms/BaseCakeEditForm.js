@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import { updateBaseCake, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm, change, formValueSelector } from "redux-form";
@@ -36,7 +36,9 @@ class BaseCakeEditForm extends Component {
         if(getValue === "" || getValue < 0.5){
             delete obj[id];
         }else{
-            obj[id]= getValue;               
+
+            obj[id]= getValue;        
+                
         }
         //convert to json string
         // const arrValue = JSON.stringify(obj);
@@ -109,7 +111,8 @@ class BaseCakeEditForm extends Component {
                         type="text"
                     />
                     <label>Please select the ingredients</label>
-                    <ul>  
+                    <ul>
+                        
                         {ingredients.map((item, index) => {
                             return (
                                 <li key={item._id}>
