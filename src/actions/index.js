@@ -1,4 +1,4 @@
-import { AUTH_TOKEN, DELETE_TOKEN, BASECAKES_LIST, BASECAKES_EDIT_LIST, INGREDIENTS_LIST, ORDERS_LIST, ORDERS_EDIT_LIST } from "./types";
+import { AUTH_TOKEN, DELETE_TOKEN, BASECAKES_LIST, BASECAKES_EDIT_LIST, INGREDIENTS_LIST, ORDERS_LIST, ORDERS_NEW_LIST, ORDERS_SHOW_LIST } from "./types";
 import LocalAPI from "./../apis/local";
 
 //use for register and login
@@ -113,17 +113,24 @@ export const deleteIngredient = (item) => {
 }
 
 //Orders section!!!!
+export const setNewOrders = (ordersNew) => {
+    return {
+        type: ORDERS_NEW_LIST,
+        payload: ordersNew
+    };
+} 
+
+export const setShowOrders = (ordersShow) => {
+    return {
+        type: ORDERS_SHOW_LIST,
+        payload: ordersShow
+    };
+}
+
 export const setOrders = (orders) => {
     return {
         type: ORDERS_LIST,
         payload: orders
-    };
-} 
-
-export const setEditOrder = (editOrder) => {
-    return {
-        type: ORDERS_EDIT_LIST,
-        payload: editOrder
     };
 }
 
@@ -135,31 +142,31 @@ export const createOrder = (date, customer_name, total_people_new, order_descrip
     } 
 }
 
-export const fetchOrders = () => {
+export const fetchBaseCakesForNew = (id) => {
     return async (dispatch, getState) => {
-        const response = await LocalAPI.get("/orders");
-        dispatch(setOrders(response.data));
+        const response = await LocalAPI.get(`/orders/new/${id}`);
+        dispatch(setNewOrders(response.data));
     }
 }
 
-export const fetchShowOrder = (id) => {
+export const fetchShowOrders = () => {
     return async (dispatch, getState) => {
-        const response = await LocalAPI.get(`/orders/show/${id}`);
-        dispatch(setOrders(response.data));
+        const response = await LocalAPI.get(`/orders/show`);
+        dispatch(setShowOrders(response.data));
     }
 }
 
-export const fetchEditOrder = (id) => {
-    return async (dispatch, getState) => {
-        const response = await LocalAPI.get(`/orders/edit/${id}`);
-        //console.log(response.data);
-        dispatch(setEditOrder(response.data));
-    } 
-}
+// export const fetchEditOrder = (id) => {
+//     return async (dispatch, getState) => {
+//         const response = await LocalAPI.get(`/orders/edit/${id}`);
+//         //console.log(response.data);
+//         dispatch(setEditOrder(response.data));
+//     } 
+// }
 
-export const updateOrder = (date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status, id) => {
-    return async (dispatch, getState) => {
-        const response = await LocalAPI.put(`/orders/edit/${id}`, { date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status });
-        dispatch(setEditOrder(response.data));
-    } 
-}
+// export const updateOrder = (date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status, id) => {
+//     return async (dispatch, getState) => {
+//         const response = await LocalAPI.put(`/orders/edit/${id}`, { date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status });
+//         dispatch(setEditOrder(response.data));
+//     } 
+// }

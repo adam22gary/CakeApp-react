@@ -26,14 +26,14 @@ class HomePage extends Component {
                 </div>
                 <div className="center aligned two column row">
                     <div className="column">
-                        <Link to="/#">
+                        <Link to="/orders">
                             <div className="ui pink segment">
                                 Create new orders
                             </div>
                         </Link>
                     </div>
                     <div className="column">
-                        <Link to="/#">
+                        <Link to="/orders/show">
                             <div className="ui pink segment">
                                 Current and past orders
                             </div>

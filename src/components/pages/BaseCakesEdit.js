@@ -21,16 +21,16 @@ class BaseCakesEdit extends Component {
         const { editBaseCakes, editAddIngredientsBaseCakes } = this.props;
         //add ingredients to state by each ObjectID then change editBaseCakes.ingredients_array back to the original JSON string
         if (editBaseCakes && Object.keys(editBaseCakes).length > 0) {
-           // const iii = JSON.parse(editBaseCakes.ingredients_array);
             for(let item in editBaseCakes.ingredients_array){
-                editBaseCakes[item] = editBaseCakes.ingredients_array[item];
+                ///omg object then array index will always be zero
+                editBaseCakes[item] = editBaseCakes.ingredients_array[item][0];
             }
-            //editBaseCakes["ingredients_array"] = editBaseCakes.ingredients_array;
         }
 
         return (
             <>
                 <h2>Edit a current BaseCake Recipe</h2>
+                {/* //only pass when length is greater than zero */}
                 {editAddIngredientsBaseCakes.length === 0 ? null : <BaseCakeEditForm onBaseCakeFormSubmit={this.onBaseCakeFormSubmit} editAddIngredientsBaseCakes={editAddIngredientsBaseCakes} initialValues={editBaseCakes} />}
             </>
         );

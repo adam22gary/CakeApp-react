@@ -59,7 +59,7 @@ class App extends Component {
                         <PrivateRoute exact path="/ingredients/" component={IngredientsPage} />
                         <PrivateRoute exact path="/ingredients/new" component={IngredientsNew} />
                         <PrivateRoute exact path="/orders/current" component={OrdersCurrent} />
-                        <PrivateRoute exact path="/orders/show/:id" component={OrdersShow} />
+                        <PrivateRoute exact path="/orders/show" component={OrdersShow} />
                         <PrivateRoute exact path="/orders/new/:id" component={OrdersNew} />
                         <PrivateRoute exact path="/orders" component={OrdersPage} />
                         <PrivateRoute exact path="/orders/edit/:id" component={OrdersEdit} />

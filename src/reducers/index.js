@@ -4,7 +4,8 @@ import baseCakesListReducer from "./baseCakes_list_reducer";
 import baseCakes_edit_list_reducer from "./baseCakes_edit_list_reducer";
 import ingredientsListReducer from "./ingredients_list_reducer";
 import ordersListReducer from "./orders_list_reducer";
-import ordersEditListReducer from "./orders_edit_list_reducer";
+import ordersNewListReducer from "./orders_new_list_reducer";
+import ordersShowListReducer from "./orders_show_list_reducer";
 import { reducer as formReducer } from "redux-form";
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
     editBaseCakes: baseCakes_edit_list_reducer,
     ingredients: ingredientsListReducer,
     orders: ordersListReducer,
-    editOrder: ordersEditListReducer,
+    ordersNew: ordersNewListReducer,
+    ordersShow: ordersShowListReducer,
     form: formReducer
 });

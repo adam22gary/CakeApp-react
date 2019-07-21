@@ -28,7 +28,7 @@ class BaseCakeForm extends Component {
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
     }
 
-    calculate = (event, id) => {
+    calculate = (event, id, name, measurement, price) => {
         //clear value first
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
         const getValue = event.target.value;
@@ -37,7 +37,7 @@ class BaseCakeForm extends Component {
             delete obj[id];
         }else{
 
-            obj[id]= getValue;        
+            obj[id]= [getValue, name, measurement, price];        
                 
         }
         //for testing display only
@@ -88,7 +88,7 @@ class BaseCakeForm extends Component {
                                         name={item._id}
                                         component={Input}
                                         type="number"
-                                        onChange={(event) => this.calculate(event,item._id)}
+                                        onChange={(event) => this.calculate(event, item._id, item.ingredients_name, item.ingredients_measurement, item.ingredients_price)}
                                         validate={[ minValue1 ]}
                                     />{item.ingredients_measurement}
                                     <div id={item._id}>${(this.props[item._id] * item.ingredients_price) > 0 ? (this.props[item._id] * item.ingredients_price) : 0}</div>

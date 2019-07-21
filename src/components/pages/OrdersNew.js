@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import OrderForm from "./../forms/OrderForm";
 import { connect } from "react-redux";
-import { fetchBaseCakes, deleteBaseCake } from "../../actions";
+import { fetchBaseCakesForNew } from "../../actions";
 
 class OrdersNew extends Component {
 
-    onOrderFormSubmit = (orders) => {
-        this.setState({ orders });
+    onOrderFormSubmit = (baseCakeForNew) => {
+        this.setState({ baseCakeForNew });
     }
 
     componentDidMount() {
-        this.props.fetchBaseCakes(this.props.match.params.id);
+        this.props.fetchBaseCakesForNew(this.props.match.params.id);
     }
 
     render() {
-        const { baseCake } = this.props;
+        const { ordersNew } = this.props;
 
         return (
             <>
                 <h2>Create New Order</h2>
-                <OrderForm onOrderFormSubmit={this.onOrderFormSubmit}  initialValues={baseCake} />
+                {ordersNew.length === 0 ? null : <OrderForm onOrderFormSubmit={this.onOrderFormSubmit}  ordersNew={ordersNew} />}
             </>
         );
     }
@@ -27,8 +27,9 @@ class OrdersNew extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        baseCake: state.baseCake
+        ordersNew: state.ordersNew
+        // ordersButReallyBaseCakeIngredientsForDisplayOnly: state.ordersNew
     }
 }
 
-export default connect(mapStateToProps, { fetchBaseCakes })(OrdersNew);
+export default connect(mapStateToProps, { fetchBaseCakesForNew })(OrdersNew);
