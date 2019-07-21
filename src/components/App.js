@@ -22,6 +22,8 @@ import history from "./../history";
 import { logoutAuthToken } from "../../src/actions";
 import { connect } from "react-redux";
 
+//import Input from "./forms/fields/Input";
+
 class App extends Component {
 
     render() {
@@ -30,38 +32,15 @@ class App extends Component {
         return (
             <Router history={history}>
                 <>
-                    {token && <h4>User Logged In!</h4>}
-                    {(token && <div>
-                        <Link to="/">
-                            <button>Home</button>
-                        </Link>
-                        <Link to="/ingredients">
-                            <button>Ingredients</button>
-                        </Link>
-                        <Link to="/baseCakes">
-                            <button>BaseCakes</button>
-                        </Link>
-                        <Link to="/orders">
-                            <button>Create New Order</button>
-                        </Link>
-                        <Link to="/orders/current">
-                            <button>Current Orders</button>
-                        </Link>
-                        <Link to="/orders/history">
-                            <button>Orders History</button>
-                        </Link>
-                                <button onClick={() => this.props.logoutAuthToken()}>Logout</button>
-                            </div>) || (<div>
-                                <Link to="/login">
-                                    <button>Login</button>
-                                </Link>
-                                <Link to="/register">
-                                    <button>Register</button>
-                                </Link>
-                            </div>)}
-                    <Switch>
-                        
-                        <Route exact path="/" component={HomePage} />
+                {token && <>
+                    <h1 className="hometitle">Cake Calculator</h1>
+                    <Link to="/">
+                        <button className="ui inverted pink left floated button">Home</button>
+                    </Link>
+                    <button className="ui inverted pink right floated button" onClick={() => this.props.logoutAuthToken()}>Logout</button>
+                    <div className="clear"></div>
+                </>}
+                    <Switch>                        
                         <Route 
                             exact 
                             path="/register" 
@@ -72,6 +51,7 @@ class App extends Component {
                             path="/login" 
                             component={LoginPage}
                         />
+                        <PrivateRoute exact path="/" component={HomePage} />
                         <PrivateRoute exact path="/baseCakes" component={BaseCakesPage} />
                         <PrivateRoute exact path="/baseCakes/show/:id" component={BaseCakesShow} />
                         <PrivateRoute exact path="/baseCakes/new/" component={BaseCakesNew} />

@@ -17,12 +17,12 @@ const obj = {};
 
 class BaseCakeForm extends Component {
     state = {
-        ingredients_array: []
+        ingredients_array: {}
     }
 
     onFormSubmit = async (formValues) => {
-        const { recipe_name, total_people, description, ingredients_array } = formValues;
-        await this.props.createBaseCake(recipe_name, total_people, description, ingredients_array);
+        const { recipe_name, total_people, description } = formValues;
+        await this.props.createBaseCake(recipe_name, total_people, description, this.state.ingredients_array);
         this.props.reset();
         //clear value after submit
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
@@ -46,6 +46,7 @@ class BaseCakeForm extends Component {
         this.setState({ingredients_array: obj});
         //add value to field
         this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
+        console.log(this.state.ingredients_array);
     }
 
     componentDidMount() {

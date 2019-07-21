@@ -5,7 +5,8 @@ class LoginPage extends Component {
     render() {
         return(
             <div>
-                <h1>Please login</h1>
+                <h1 className="hometitle">Cake Calculator</h1>
+                <h2>Login</h2>
                 <LoginForm {...this.props} />
             </div>
         );
