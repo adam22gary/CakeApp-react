@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchShowBaseCakes, deleteBaseCake  } from "../../actions";
+import { fetchShowBaseCakes, fetchIngredients, deleteBaseCake  } from "../../actions";
 
 class BaseCakesShow extends Component {
     onDeleteItem = async (id) => {
         await this.props.deleteBaseCake(id);
     }
     componentDidMount() {
+        this.props.fetchIngredients();
         this.props.fetchShowBaseCakes(this.props.match.params.id);
     }
 
@@ -32,6 +33,23 @@ class BaseCakesShow extends Component {
                         );
                     })}
                 </ul>
+                <div>{baseCakes.map((item, index) => {
+                        return (
+                            <div key={item._id}>
+                                 <ul>
+                                 {console.log(item.ingredients_array)}
+                                    {Object.keys(item.ingredients_array).map((theKey, index) => {
+                                        return (
+                                            <li key={theKey}>
+                                                {item.ingredients_array[theKey][0]} {item.ingredients_array[theKey][1]} {item.ingredients_array[theKey][2]} ${item.ingredients_array[theKey][3]}
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+                        );
+                    })}
+                </div>
             </>
         );
     }
@@ -39,8 +57,9 @@ class BaseCakesShow extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        ingredients: state.ingredients,
         baseCakes: state.baseCakes
     }
 }
 
-export default connect(mapStateToProps, { fetchShowBaseCakes, deleteBaseCake  })(BaseCakesShow);
+export default connect(mapStateToProps, { fetchShowBaseCakes, fetchIngredients, deleteBaseCake  })(BaseCakesShow);

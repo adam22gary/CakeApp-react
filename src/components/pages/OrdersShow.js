@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchShowOrder } from "../../actions";
+import { fetchShowOrders } from "../../actions";
 
 class OrderShow extends Component {
   
     componentDidMount() {
-        this.props.fetchShowOrders(this.props.match.params.id);
+        this.props.fetchShowOrders();
     }
 
     render() {
-        const { orders } = this.props;
-        console.log(orders)
+        const { ordersShow } = this.props;
+        console.log(ordersShow)
         return (
             <>
                 <h2>Past Orders</h2>
                 <ul>
-                    {orders.map((item, index) => {
+                    {ordersShow.map((item, index) => {
                         return (
                             <li key={item._id}>
                                  {item.recipe_name }
@@ -36,8 +36,8 @@ class OrderShow extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        orders: state.orders
+        ordersShow: state.ordersShow
     }
 }
 
-export default connect(mapStateToProps, { fetchShowOrder })(OrderShow);
+export default connect(mapStateToProps, { fetchShowOrders })(OrderShow);

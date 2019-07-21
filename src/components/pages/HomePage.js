@@ -33,7 +33,7 @@ class HomePage extends Component {
                         </Link>
                     </div>
                     <div className="column">
-                        <Link to="/history">
+                        <Link to="/orders/show">
                             <div className="ui pink segment">
                                 Current and past orders
                             </div>

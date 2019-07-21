@@ -1,11 +1,12 @@
-import React, {Component} from "react";
-import { createOrder, fetchShowBaseCakes } from "../../actions";
+import React, { Component } from "react";
+import { createOrder, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
-import { Field, reduxForm, change, formValueSelector } from "redux-form";
+import { Field, reduxForm, formValueSelector } from "redux-form";
 import Input from "./fields/Input";
-import { isAfter } from 'date-fns';
+import history from "./../../history";
 
-//validation
+
+//Form validation
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 const minValue = min => value =>
@@ -17,50 +18,47 @@ const obj = {};
 
 class OrderForm extends Component {
     state = {
-        ingredients_array: [],
-        order_status: "current"
+        recipe_name: null,
+        ingredients_array: {},
+        total_people: null,
+        description: null
     }
 
     onFormSubmit = async (formValues) => {
-        const { date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status } = formValues;
-        await this.props.createOrder(date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status);
-        this.props.reset();
-        //clear value after submit
-        this.props.dispatch(change('order', 'ingredients_array', []));
+        const { date, customer_name, total_people_new, order_description, total_price } = formValues;
+        await this.props.createOrder(date, customer_name, total_people_new, order_description, String(this.state.recipe_name), this.state.ingredients_array, String(this.state.total_people), String(this.state.description), parseInt(total_price));
+        //push history
+        history.push("/orders/show");
     }
 
-    calculate = (event, id) => {
-        //clear value first
-        this.props.dispatch(change('order', 'ingredients_array', []));
-        const getValue = event.target.value;
-
-        if(getValue === "" || getValue < 0.5){
-            delete obj[id];
-        }else{
-            obj[id]= getValue;        
-                
+    componentDidMount() {
+        this.props.fetchIngredients();
+        //this is from ordersNew
+        const { ordersNew } = this.props;
+        if (ordersNew && ordersNew.length > 0) {
+            this.setState({
+                recipe_name: ordersNew[0].recipe_name,
+                total_people: ordersNew[0].total_people,
+                description: ordersNew[0].description,
+                ingredients_array: ordersNew[0].ingredients_array           
+            });
         }
-        //for testing display only
-        document.getElementById("forDisplay").innerHTML = obj[0]; 
-        //update state
-        this.setState({ingredients_array: obj});
-        //add value to field
-        this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
     }
 
     render() {
-        const { handleSubmit, baseCakes } = this.props;
-        console.log(baseCakes);
+        console.log(this.state);
+            console.log("ffffffffffffffffffffff");
+        const { handleSubmit, ordersNew } = this.props;
 
-        return(
+        return(<>
             <form onSubmit={handleSubmit(this.onFormSubmit)}>
+                
                 <div>
                     <label>Customer Name</label>
                      <Field
                         name="customer_name"
-                        component={Input}
+                        component={"input"}
                         type="text"
-                        validate={required}
                     />
                     <label>No. of People</label>
                     <Field
@@ -84,12 +82,29 @@ class OrderForm extends Component {
                     <label>Total Price</label>
                     <Field
                         name="total_price"
-                        component={Input}
+                        component={"input"}
                         type="number"
                     />
                 </div>
                 <input type="submit" value="Create" />
             </form>
+            <div>{ordersNew.map((item, index) => {
+                    return (
+                        <div key={item._id}>
+                            <ul>
+                                {Object.keys(item.ingredients_array).map((theKey, index) => {
+                                    return (
+                                        <li key={theKey}>
+                                            {item.ingredients_array[theKey][0]} {item.ingredients_array[theKey][1]} {item.ingredients_array[theKey][2]} ${item.ingredients_array[theKey][3]}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                    );
+                })}
+            </div>
+            </>
         );
     }
 }
@@ -134,10 +149,9 @@ const mapStateToProps = (state) => {
     });
     
     return {
-        orders: state.orders,
-        baseCakes: state.baseCakes,
+        ingredients: state.ingredients,
         ...formMapping
     }
 }
 
-export default connect(mapStateToProps, { createOrder, fetchShowBaseCakes })(WrappedOrderForm);
+export default connect(mapStateToProps, { createOrder, fetchIngredients })(WrappedOrderForm);

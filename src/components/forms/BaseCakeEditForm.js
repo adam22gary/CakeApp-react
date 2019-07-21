@@ -28,7 +28,7 @@ class BaseCakeEditForm extends Component {
         history.push("/baseCakes");
     }
 
-    calculate = (event, id) => {
+    calculate = (event, id, name, measurement, price) => {
         //clear value first
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
         const getValue = event.target.value;
@@ -36,22 +36,12 @@ class BaseCakeEditForm extends Component {
         if(getValue === "" || getValue < 0.5){
             delete obj[id];
         }else{
-
-            obj[id]= getValue;        
-                
+            obj[id]= [getValue, name, measurement, price];               
         }
-        //convert to json string
-        // const arrValue = JSON.stringify(obj);
-        // console.log(typeof arrValue);
-        // console.log(arrValue);
         //for testing display only
         document.getElementById("forDisplay").innerHTML = obj[0]; 
         //update state
         this.setState({ingredients_array: obj});
-        // console.log(this.state.ingredients_array);
-        //add value to field
-        //this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
-
     }
 
     componentDidMount() {
@@ -61,30 +51,17 @@ class BaseCakeEditForm extends Component {
         if (editAddIngredientsBaseCakes && Object.keys(editAddIngredientsBaseCakes).length > 0) {
             //const iii = JSON.parse(editAddIngredientsBaseCakes.ingredients_array);
             for(let item in editAddIngredientsBaseCakes.ingredients_array){
+                // insert the whole array
                 obj[item] = editAddIngredientsBaseCakes.ingredients_array[item];
-                //this.setState({ingredients_array[item]:  iii[item]});
             }
+          
             this.setState({ingredients_array:  obj});
-            // console.log(this.state.ingredients_array);
-            // console.log("lllllllllllllllllllll");
-            
         }
     }
 
     render() {
         // console.log(this.state.ingredients_array);
         const { handleSubmit, ingredients } = this.props;
-        // console.log(this.props);
-        //add ingredients to the obj object in calculate onload 
-        // if (editAddIngredientsBaseCakes && Object.keys(editAddIngredientsBaseCakes).length > 0 && this.state.booleanIsOn) {
-        //     const iii = JSON.parse(editAddIngredientsBaseCakes.ingredients_array);
-        //     for(let item in iii){
-        //         obj[item] = iii[item];
-        //     }
-        //     this.setState({booleanIsOn: false});
-        //     console.log("hello");
-        // }
-
         return(
             //need to send id
             
@@ -121,7 +98,7 @@ class BaseCakeEditForm extends Component {
                                         name={item._id}
                                         component={Input}
                                         type="number"
-                                        onChange={(event) => this.calculate(event,item._id)}
+                                        onChange={(event) => this.calculate(event,item._id, item.ingredients_name, item.ingredients_measurement, item.ingredients_price)}
                                         validate={[ minValue1 ]}
                                     />{item.ingredients_measurement}
                                     <div id={item._id}>${(this.props[item._id] * item.ingredients_price) > 0 ? (this.props[item._id] * item.ingredients_price) : 0}</div>
