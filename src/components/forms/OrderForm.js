@@ -3,6 +3,7 @@ import { createOrder, fetchShowBaseCakes } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm, change, formValueSelector } from "redux-form";
 import Input from "./fields/Input";
+import { isAfter } from 'date-fns';
 
 //validation
 const required = value => value ? undefined : 'Required';
@@ -36,7 +37,6 @@ class OrderForm extends Component {
         if(getValue === "" || getValue < 0.5){
             delete obj[id];
         }else{
-
             obj[id]= getValue;        
                 
         }
@@ -71,7 +71,7 @@ class OrderForm extends Component {
                     />
                     <label>Due Date</label>
                     <Field
-                        name="date"
+                        name="due_date"
                         component={Input}
                         type="date"
                     />
@@ -99,18 +99,25 @@ const WrappedOrderForm = reduxForm({
     //omg so important
     enableReinitialize: true,
     validate: (formValues) => {
+        console.log(formValues)
         const errors = {};
 
         if(!formValues.recipe_name) {
-            errors.recipe_name = "Recipe name is required";
+            errors.customer_name = "Customer name is required";
         }
 
         if(!formValues.total_people) {
             errors.total_people = "Number of people is required";
         }
 
-        if(!formValues.date) {
-            errors.description= "Date is required";
+        if(!formValues.due_date) {
+            errors.due_date = "Date is required";
+        }
+
+        console.log(">>>>>>>>", new Date(), new Date(formValues.due_date), isAfter(new Date(), new Date(formValues.due_date)));
+
+        if(isAfter(new Date(), new Date(formValues.due_date))) {
+            errors.due_date = "Must be after today.";
         }
 
         return errors;

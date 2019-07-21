@@ -169,7 +169,7 @@ export const createOrder = (date, customer_name, recipe_name, total_people, ingr
             total_price, 
             order_status
         });
-
+        console.log(">>>>>>>>>>>>>>>>>>>>>", response );
         dispatch(setOrders(response.data));
     } 
 }
