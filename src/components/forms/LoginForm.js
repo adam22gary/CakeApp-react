@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import LocalAPI from "./../../apis/local";
 import { setAuthToken } from "./../../actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class LoginForm extends Component {
     state = { 
@@ -30,18 +31,36 @@ class LoginForm extends Component {
         const { email, password } = this.state;
 
         return (
-            <form onSubmit={this.onFormSubmit}>
-                <p>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" value={email} onChange={(event) => this.onInputChange("email", event)} />
-                </p>
-                <p>
-                    <label htmlFor="email">Password</label>
-                    <input type="password" value={password} onChange={(event) => this.onInputChange("password", event)} />
-                </p>
-                <p>
-                    <input type="submit" value="Login" />
-                </p>
+            <form onSubmit={this.onFormSubmit}> 
+                <div className="ui placeholder segment">
+                    <div className="ui two column very relaxed stackable grid">
+                        <div className="column">
+                        <div className="ui form">
+                            <div className="field">
+                            <label htmlFor="email">Email</label>
+                            <div className="ui left icon input">
+                                <input type="email" value={email} onChange={(event) => this.onInputChange("email", event)} />
+                                <i className="user icon"></i>
+                            </div>
+                            </div>
+                            <div className="field">
+                            <label htmlFor="password">Password</label>
+                            <div className="ui left icon input">
+                                <input type="password" value={password} onChange={(event) => this.onInputChange("password", event)} />
+                                <i className="lock icon"></i>
+                            </div>
+                            </div>
+                            <input className="ui inverted pink submit button" type="submit" value="Login" />
+                        </div>
+                        </div>
+                        <div className="middle aligned column">
+                            <p>Need to create an account?</p>
+                            <Link to="/register">
+                                <button className="ui inverted pink submit button">Register</button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
             </form>
         );
     }
