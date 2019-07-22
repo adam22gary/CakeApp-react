@@ -1,24 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchBaseCakes, deleteBaseCake } from "../../actions";
+import { fetchBaseCakes } from "../../actions";
 import { Button, Container, Header, Icon, Item } from 'semantic-ui-react';
 
-class BaseCakesPage extends Component {
-    defaultState = { data: null, error: null };
-    constructor(props) {
-        super(props);
-    
-        // Set the default state immediately
-        this.state = this.defaultState;
-    }
-
-    onDeleteItem = async (id) => {
-        await this.props.deleteBaseCake(id);
-    }
+class OrdersPage extends Component {
 
     componentDidMount() {
-        this.setState();
         this.props.fetchBaseCakes();
     }
 
@@ -27,7 +15,7 @@ class BaseCakesPage extends Component {
 
         return (
             <>
-            <h1 content='Responsive Item' textalign='left' style={{ fontFamily: "Lobster", marginLeft: "150px" }} >My base cake recipes</h1>
+            <h1 content='Responsive Item' textalign='left' style={{ fontFamily: "Lobster", marginLeft: "150px" }} >Select a base cake recipe</h1>
                 <div className="clear"></div>
                 <Container>
                     <Item.Group divided>
@@ -46,21 +34,9 @@ class BaseCakesPage extends Component {
                                         </Item.Description>
                                         <div className="antonella_padding"></div>
                                         <Item.Extra>
-                                            <Link to="#">
-                                                <Button floated='right' color='google plus' onClick={() => window.confirm("Are you sure you wish to delete this cake?") && this.onDeleteItem(item._id)}>
-                                                    Delete this Cake
-                                            <Icon className='delete right' />
-                                                </Button>
-                                            </Link>
-                                            <Link to={`/baseCakes/edit/${item._id}`}>
-                                                <Button floated='right' primary>
-                                                    Edit this Cake
-                                            <Icon className='edit right' />
-                                                </Button>
-                                            </Link>
-                                            <Link to={`/baseCakes/show/${item._id}`}>
+                                            <Link to={`/orders/new/${item._id}`}>
                                                 <Button floated='right' color='teal'>
-                                                    View this Cake
+                                                    Select this Cake
                                             <Icon className='birthday cake right' />
                                                 </Button>
                                             </Link>
@@ -70,14 +46,6 @@ class BaseCakesPage extends Component {
                             );
                         })}
                     </Item.Group>
-                    <h1 content='Responsive Item' style={{ fontFamily: "Lobster", marginLeft: "0px", textAlign: "left" }} >Base Cake Recipes</h1>
-                    <div className="clear"></div>
-                    <Link to="/baseCakes/new">
-                        <button className="ui green button" style={{ marginLeft: "0px" }}>Create a new base cake recipe
-                        <Icon className='plus icon right' />
-                        </button>
-                    </Link>
-                    <div className="clear"></div>
                     <Link to="/">
                         <span className="ui yellow button">Back</span>
                     </Link>
@@ -94,4 +62,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchBaseCakes, deleteBaseCake })(BaseCakesPage);
+export default connect(mapStateToProps, { fetchBaseCakes })(OrdersPage);

@@ -6,6 +6,7 @@ import ingredientsListReducer from "./ingredients_list_reducer";
 import ordersListReducer from "./orders_list_reducer";
 import ordersNewListReducer from "./orders_new_list_reducer";
 import ordersShowListReducer from "./orders_show_list_reducer";
+import ordersAllListReducer from "./orders_all_list_reducer";
 import { reducer as formReducer } from "redux-form";
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
     orders: ordersListReducer,
     ordersNew: ordersNewListReducer,
     ordersShow: ordersShowListReducer,
+    ordersAll: ordersAllListReducer,
     form: formReducer
 });

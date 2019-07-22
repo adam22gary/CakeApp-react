@@ -3,6 +3,7 @@ import { createIngredient } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import Input from "./fields/Input";
+import { Link } from "react-router-dom";
 
 //validation
 const required = value => value ? undefined : 'Required';
@@ -22,44 +23,53 @@ class IngredientForm extends Component {
         const { handleSubmit } = this.props;
 
         return(
-            <form onSubmit={handleSubmit(this.onFormSubmit)}>
-                <div>
-                    <label>Name of Ingredient</label>
-                    <Field
-                        name="ingredients_name"
-                        component={Input}
-                        type="text"
-                    />
-                    <label>Quantity</label>
-                    <Field
-                        name="ingredients_quantity"
-                        component={Input}
-                        type="number"
-                        validate={[ required, number, minValue1 ]}
-                    />
-                    <label>Measurement</label>
-                    <Field 
-                        name="ingredients_measurement" 
-                        component="select"
-                        required>
-                        <option value="" disabled>Choose measurement</option>
-                        <option value="piece">piece</option>
-                        <option value="dozen">dozen</option>
-                        <option value="g">g</option>
-                        <option value="kg">kg</option>
-                        <option value="mL">mL</option>
-                        <option value="L">L</option>
-                    </Field>
-                    <label>Price</label>
-                    <Field
-                        name="ingredients_price"
-                        component={Input}
-                        type="number"
-                        validate={[ required, number, minValue1 ]}
-                    />
-                </div>
-                <input type="submit" value="Create" />
-            </form>
+            <div className="formclass">
+                <form className="ui form" onSubmit={handleSubmit(this.onFormSubmit)}>
+                    <div>
+                        <label><strong>Ingredient Name</strong></label>
+                        <Field
+                            name="ingredients_name"
+                            component={Input}
+                            type="text"
+                        />
+                        <label><strong>Quantity</strong></label>
+                        <Field
+                            name="ingredients_quantity"
+                            component={Input}
+                            type="number"
+                            validate={[required, number, minValue1]}
+                        />
+                        <label><strong>Measurement</strong></label>
+                        <Field
+                            name="ingredients_measurement"
+                            component="select"
+                            required>
+                            <option value="" disabled>Choose measurement</option>
+                            <option value="piece">piece</option>
+                            <option value="dozen">dozen</option>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="mL">mL</option>
+                            <option value="L">L</option>
+                        </Field>
+                        <label><strong>Price</strong></label>
+                        <Field
+                            name="ingredients_price"
+                            component={Input}
+                            type="number"
+                            validate={[required, number, minValue1]}
+                        />
+                    </div>
+                    <div className="ui clear"></div>
+                    {/* <input type="submit" value="Create" /> */}
+                    <Link to="/ingredients">
+                        <span className="ui yellow button">Back</span>
+                    </Link>
+                    <button className="ui green button" type="submit">Create</button>
+                    <div className="ui clear"></div>
+                </form>
+            </div>
+
         );
     }
 }

@@ -9,20 +9,18 @@ import BaseCakesPage from "./pages/BaseCakesPage";
 import BaseCakesShow from "./pages/BaseCakesShow";
 import BaseCakesNew from "./pages/BaseCakesNew";
 import BaseCakesEdit from "./pages/BaseCakesEdit";
-import OrdersPage from "./pages/Orders";
+import OrdersPage from "./pages/OrdersPage";
+import OrdersShowAll from "./pages/OrdersShowAll";
 import OrdersShow from "./pages/OrdersShow";
-import OrdersCurrent from "./pages/OrdersCurrent";
-import OrdersEdit from "./pages/OrdersEdit";
+// import OrdersEdit from "./pages/OrdersEdit";
 import OrdersNew from "./pages/OrdersNew";
-import OrdersHistory from "./pages/OrdersHistory";
 import IngredientsPage from "./pages/IngredientsPage";
 import IngredientsNew from "./pages/IngredientsNew";
+import Footer from "./pages/Footer";
 import PrivateRoute from "./PrivateRoute";
 import history from "./../history";
 import { logoutAuthToken } from "../../src/actions";
 import { connect } from "react-redux";
-
-//import Input from "./forms/fields/Input";
 
 class App extends Component {
 
@@ -33,11 +31,13 @@ class App extends Component {
             <Router history={history}>
                 <>
                 {token && <>
-                    <h1 className="hometitle">Cake Calculator</h1>
+                    <h1 className="hometitle birthday cake icon" style={{ backgroundColor: "#ff0081", color: "white" }}>
+                        <i class="birthday cake icon" style={{ marginBottom: "10px" }}></i>
+                        Cake Calculator</h1>
+                    <button className="ui inverted pink right floated button" style={{ marginRight: "15px"}} onClick={() => this.props.logoutAuthToken()}>Logout</button>
                     <Link to="/">
-                        <button className="ui inverted pink left floated button">Home</button>
+                        <button className="ui left inverted pink left floated button" style={{ marginLeft: "15px"}}>Home</button>
                     </Link>
-                    <button className="ui inverted pink right floated button" onClick={() => this.props.logoutAuthToken()}>Logout</button>
                     <div className="clear"></div>
                 </>}
                     <Switch>                        
@@ -58,14 +58,14 @@ class App extends Component {
                         <PrivateRoute exact path="/baseCakes/edit/:id" component={BaseCakesEdit} />
                         <PrivateRoute exact path="/ingredients/" component={IngredientsPage} />
                         <PrivateRoute exact path="/ingredients/new" component={IngredientsNew} />
-                        <PrivateRoute exact path="/orders/current" component={OrdersCurrent} />
-                        <PrivateRoute exact path="/orders/show" component={OrdersShow} />
+                        <PrivateRoute exact path="/orders/showAll" component={OrdersShowAll} />
+                        <PrivateRoute exact path="/orders/show/:id" component={OrdersShow} />
                         <PrivateRoute exact path="/orders/new/:id" component={OrdersNew} />
                         <PrivateRoute exact path="/orders" component={OrdersPage} />
-                        <PrivateRoute exact path="/orders/edit/:id" component={OrdersEdit} />
-                        <PrivateRoute exact path="/orders/history" component={OrdersHistory} />
+                        {/* <PrivateRoute exact path="/orders/edit/:id" component={OrdersEdit} />*/}
                         <Route component={NotFoundPage} />
                     </Switch>
+                    <Footer />
                 </>
             </Router>
         );
