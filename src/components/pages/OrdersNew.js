@@ -28,7 +28,6 @@ class OrdersNew extends Component {
 const mapStateToProps = (state) => {
     return {
         ordersNew: state.ordersNew
-        // ordersButReallyBaseCakeIngredientsForDisplayOnly: state.ordersNew
     }
 }
 

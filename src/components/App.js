@@ -12,7 +12,6 @@ import BaseCakesEdit from "./pages/BaseCakesEdit";
 import OrdersPage from "./pages/Orders";
 import OrdersShow from "./pages/OrdersShow";
 import OrdersCurrent from "./pages/OrdersCurrent";
-import OrdersEdit from "./pages/OrdersEdit";
 import OrdersNew from "./pages/OrdersNew";
 import OrdersHistory from "./pages/OrdersHistory";
 import IngredientsPage from "./pages/IngredientsPage";
@@ -62,7 +61,6 @@ class App extends Component {
                         <PrivateRoute exact path="/orders/show" component={OrdersShow} />
                         <PrivateRoute exact path="/orders/new/:id" component={OrdersNew} />
                         <PrivateRoute exact path="/orders" component={OrdersPage} />
-                        <PrivateRoute exact path="/orders/edit/:id" component={OrdersEdit} />
                         <PrivateRoute exact path="/orders/history" component={OrdersHistory} />
                         <Route component={NotFoundPage} />
                     </Switch>

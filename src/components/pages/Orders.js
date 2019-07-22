@@ -4,16 +4,8 @@ import { connect } from "react-redux";
 import { fetchBaseCakes } from "../../actions";
 
 class Orders extends Component {
-    defaultState = { data: null, error: null };
-    constructor(props) {
-        super(props);
-    
-        // Set the default state immediately
-        this.state = this.defaultState;
-    }
 
     componentDidMount() {
-        this.setState();
         this.props.fetchBaseCakes();
     }
 

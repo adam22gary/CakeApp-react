@@ -4,17 +4,15 @@ import { connect } from "react-redux";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 import Input from "./fields/Input";
 import history from "./../../history";
+import { isAfter } from 'date-fns'
 
 
 //Form validation
 const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-const minValue = min => value =>
-  value && value < min ? `Must be at least ${min}` : undefined;
+const minValue = min => value => value && value < min ? `Must be at least ${min}` : undefined;
 const minValue1 = minValue(0.5);
 
-// object for ingredients
-const obj = {};
 
 class OrderForm extends Component {
     state = {
@@ -25,10 +23,20 @@ class OrderForm extends Component {
     }
 
     onFormSubmit = async (formValues) => {
-        const { date, customer_name, total_people_new, order_description, total_price } = formValues;
-        await this.props.createOrder(date, customer_name, total_people_new, order_description, String(this.state.recipe_name), this.state.ingredients_array, String(this.state.total_people), String(this.state.description), parseInt(total_price));
+        const { due_date, customer_name, total_people_new, order_description, total_price } = formValues;
+        await this.props.createOrder(
+            due_date, 
+            customer_name, 
+            total_people_new, 
+            order_description, 
+            String(this.state.recipe_name), 
+            this.state.ingredients_array, 
+            String(this.state.total_people), 
+            String(this.state.description), 
+            parseInt(total_price)
+        );
         //push history
-        history.push("/orders/show");
+        history.push("/orders");
     }
 
     componentDidMount() {
@@ -57,12 +65,12 @@ class OrderForm extends Component {
                     <label>Customer Name</label>
                      <Field
                         name="customer_name"
-                        component={"input"}
+                        component={Input}
                         type="text"
                     />
                     <label>No. of People</label>
                     <Field
-                        name="total_people"
+                        name="total_people_new"
                         component={Input}
                         type="number"
                         validate={[ required, number, minValue1 ]}
@@ -75,18 +83,18 @@ class OrderForm extends Component {
                     />
                     <label>Description</label>
                     <Field
-                        name="description"
+                        name="order_description"
                         component={Input}
                         type="text"
                     />
                     <label>Total Price</label>
                     <Field
                         name="total_price"
-                        component={"input"}
+                        component={Input}
                         type="number"
                     />
                 </div>
-                <input type="submit" value="Create" />
+                <input type="submit" value="Create Order" />
             </form>
             <div>{ordersNew.map((item, index) => {
                     return (
@@ -117,19 +125,17 @@ const WrappedOrderForm = reduxForm({
         console.log(formValues)
         const errors = {};
 
-        if(!formValues.recipe_name) {
+        if(!formValues.customer_name) {
             errors.customer_name = "Customer name is required";
         }
 
-        if(!formValues.total_people) {
+        if(!formValues.total_people_new) {
             errors.total_people = "Number of people is required";
         }
 
         if(!formValues.due_date) {
             errors.due_date = "Date is required";
         }
-
-        console.log(">>>>>>>>", new Date(), new Date(formValues.due_date), isAfter(new Date(), new Date(formValues.due_date)));
 
         if(isAfter(new Date(), new Date(formValues.due_date))) {
             errors.due_date = "Must be after today.";

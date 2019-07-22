@@ -135,14 +135,6 @@ export const setOrders = (orders) => {
     };
 }
 
-export const createOrder = (date, customer_name, total_people_new, order_description, recipe_name, ingredients_array, total_people, description, total_price) => {
-    return async (dispatch, getState) => {
-        const response = await LocalAPI.post(`/orders`, { date, customer_name, total_people_new, order_description, recipe_name, ingredients_array, total_people, description, total_price });
-        console.log(response.data)
-        dispatch(setOrders(response.data));
-    } 
-}
-
 export const fetchBaseCakesForNew = (id) => {
     return async (dispatch, getState) => {
         const response = await LocalAPI.get(`/orders/new/${id}`);
@@ -172,19 +164,20 @@ export const fetchShowOrders = () => {
 //     } 
 // }
 
-export const createOrder = (date, customer_name, recipe_name, total_people, ingredients_array, description, total_price, order_status) => {
+export const createOrder = (due_date, customer_name, order_description, total_people_new, recipe_name, ingredients_array, description, total_people, total_price) => {
     return async (dispatch, getState) => {
         const response = await LocalAPI.post(`/orders`, { 
-            date, 
-            customer_name, 
-            recipe_name, 
-            total_people, 
+            due_date, 
+            customer_name,
+            total_people_new,
+            order_description,
+            recipe_name,  
             ingredients_array, 
-            description, 
+            total_people,
+            description,
             total_price, 
-            order_status
         });
-        console.log(">>>>>>>>>>>>>>>>>>>>>", response );
+        console.log(">>>>>>>>>>>>>>>>>>>>>", response.data );
         dispatch(setOrders(response.data));
     } 
 }

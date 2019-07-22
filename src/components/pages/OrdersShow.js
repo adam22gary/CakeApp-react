@@ -22,9 +22,6 @@ class OrderShow extends Component {
                                  {item.recipe_name }
                                  {item.total_people }
                                  {item.description }
-                                 <Link to={`/orders/edit/${item._id}`}>
-                                    <button>Edit Order</button>
-                                 </Link>
                             </li>
                         );
                     })}
