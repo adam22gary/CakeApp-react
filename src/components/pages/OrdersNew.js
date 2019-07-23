@@ -19,6 +19,7 @@ class OrdersNew extends Component {
         return (
             <>
                 <h2>Create New Order</h2>
+                <div className="clear"></div>
                 {ordersNew.length === 0 ? null : <OrderForm onOrderFormSubmit={this.onOrderFormSubmit}  ordersNew={ordersNew} />}
             </>
         );

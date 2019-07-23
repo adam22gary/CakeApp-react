@@ -9,32 +9,41 @@ class OrderShow extends Component {
     state = {
         total_people: 0.0,
         total_people_new: 0.0,
-        total_price: 0.0
+        total_price: 0.0,
+        onOff: true
     }
     onDeleteItem = async (id) => {
         await this.props.deleteOrder(id);
     }
   
     componentDidMount() {
-        if(this.props.fetchShowOrders(this.props.match.params.id)){
-            this.props.fetchShowOrders(this.props.match.params.id);
-        }
+        this.props.fetchShowOrders(this.props.match.params.id);
         //this is from ordersNew
-        const { ordersShow } = this.props;
-        if (ordersShow && ordersShow.length > 0) {
-            this.setState({
-                total_people: parseFloat(ordersShow[0].total_people),
-                total_people_new: parseFloat(ordersShow[0].total_people_new),
-                total_price: parseFloat(ordersShow[0].total_price),
-            });
-        }
-        console.log(this.props);
+        // const { ordersShow } = this.props;
+        // if (ordersShow && ordersShow.length > 0) {
+        //     this.setState({
+        //         total_people: parseFloat(ordersShow[0].total_people),
+        //         total_people_new: parseFloat(ordersShow[0].total_people_new),
+        //         total_price: parseFloat(ordersShow[0].total_price),
+        //     });
+        // }
+        // console.log(this.props);
     }
 
     render() {
         const { ordersShow } = this.props;
-        const { total_people, total_people_new, total_price } = this.state;
-        console.log(ordersShow);
+        const { total_people, total_people_new, total_price, onOff } = this.state;
+
+        //do not update state in render - ask Garret
+        if (onOff && ordersShow && ordersShow.length > 0) {
+            this.setState({
+                total_people: parseFloat(ordersShow[0].total_people),
+                total_people_new: parseFloat(ordersShow[0].total_people_new),
+                total_price: parseFloat(ordersShow[0].total_price),
+                onOff: false
+            });
+        }
+        
         return (
             <> 
             
@@ -67,10 +76,10 @@ class OrderShow extends Component {
                                             {Object.keys(item.ingredients_array).map((theKey, index) => {
                                                 return (
                                                     <tr key={theKey}>
-                                                        <td>{((parseInt(item.ingredients_array[theKey][0]) / total_people) * total_people_new).toFixed(2)} {item.ingredients_array[theKey][0]}</td>
+                                                        <td>{((parseInt(item.ingredients_array[theKey][0]) / total_people) * total_people_new).toFixed(2)}</td>
                                                         <td>{item.ingredients_array[theKey][1]}</td>
                                                         <td>{item.ingredients_array[theKey][2]}</td>
-                                                        <td>${item.ingredients_array[theKey][3]}</td>
+                                                        <td>${((parseFloat(item.ingredients_array[theKey][3]) / total_people) * total_people_new).toFixed(2)}</td>
                                                     </tr>
                                                 );
                                             })}
@@ -83,76 +92,20 @@ class OrderShow extends Component {
                         {ordersShow.map((item, index) => {
                             return (
                                 <tbody key={item._id}>
-                                    <tr><td>Total food cost: {item.customer_name}</td></tr>
-                                    <tr><td>Due Date: {format(item.due_date, 'DD/MM/YYYY')}</td></tr>
-                                    <tr><td>Total people: {item.total_people_new}</td></tr>
-                                    <tr><td>Description:</td></tr>
-                                    <tr><td>{item.order_description}</td></tr>
+                                    <tr><td>Total food cost: ${(parseFloat(total_price) / 5).toFixed(2)}</td></tr>
+                                    <tr><td>Profit margin: 500%</td></tr>
+                                    <tr><td>Total quote price: ${total_price}</td></tr>
                                 </tbody>
                             );
                         })}
-                </table>
+                    </table>
+                <div className="antonella_padding"></div>
                 <Link to="/orders/showAll">
                     <span className="ui yellow button">Back</span>
                 </Link>
                 </div>
                 <div className="clear"></div>
                 <div className="clear"></div>
-
-
-             <h1 content='Responsive Item' textalign='left' style={{ fontFamily: "Lobster", marginLeft: "150px" }} >My order</h1>
-                <div className="clear"></div>
-                <Container>
-                    <Item.Group divided>
-                        {ordersShow.map((item, index) => {
-                            return (
-                                <Item key={item._id}>
-                                    <Item.Content>
-                                    <Item.Header as='a'>{item.customer_name}</Item.Header>
-                                        <div className="antonella_padding"></div>
-                                        <Item.Meta>
-                                            Due Date: {format(item.due_date, 'DD/MM/YYYY')}
-                                        </Item.Meta>
-                                        <div className="antonella_padding"></div>
-                                        <Item.Meta>
-                                            Total people: {item.total_people_new}
-                                        </Item.Meta>
-                                        <div className="antonella_padding"></div>
-                                        <Item.Description>
-                                            {item.order_description}
-                                        </Item.Description>
-                                        <div className="antonella_padding"></div>
-                                        <Item.Extra>
-
-                                        </Item.Extra>
-                                    </Item.Content>
-                                </Item>
-                            );
-                        })}
-                    </Item.Group>
-                    <Link to="/orders/showAll">
-                        <span className="ui yellow button">Back</span>
-                    </Link>
-                    <div className="clear"></div>
-                </Container>
-                <div className="clear"></div>
-
-                <h2>Order</h2>
-                <ul>
-                    {ordersShow.map((item, index) => {
-                        return (
-                            <li key={item._id}>
-                                 {item.due_date}
-                                 {item.customer_name }
-                                 {item.total_people_new }
-                                 {item.order_description }
-                                 <Link to="/orders/showAll">
-                                    <span className="ui yellow button">Back</span>
-                                </Link>
-                            </li>
-                        );
-                    })}
-                </ul>
             </>
         );
     }
