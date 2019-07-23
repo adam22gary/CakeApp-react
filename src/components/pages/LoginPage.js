@@ -5,15 +5,15 @@ class LoginPage extends Component {
     render() {
         return(
             <>
-            <div class="pusher">
-                    <div class="ui inverted vertical masthead center aligned segment">
-                        <div class="ui container">
-                            <div class="velas">
-                                <div class="fuego"></div>
-                                <div class="fuego"></div>
-                                <div class="fuego"></div>
-                                <div class="fuego"></div>
-                                <div class="fuego"></div>
+            <div className="pusher">
+                    <div className="ui inverted vertical masthead center aligned segment">
+                        <div className="ui container">
+                            <div className="velas">
+                                <div className="fuego"></div>
+                                <div className="fuego"></div>
+                                <div className="fuego"></div>
+                                <div className="fuego"></div>
+                                <div className="fuego"></div>
                             </div>
                             <svg id="cake" version="1.1" x="0px" y="0px" width="200px" height="500px" viewBox="0 0 200 500" enable-background="new 0 0 200 500" >
                             <path fill="#a88679" d="M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
@@ -167,15 +167,15 @@ class LoginPage extends Component {
                 
                             
                         </div>
-                        <div class="ui text container">
-                            <h1 class="ui inverted header" style={{ fontFamily: "Lobster", fontSize: "60px" }}>Cake Calculator</h1>
+                        <div className="ui text container">
+                            <h1 className="ui inverted header" style={{ fontFamily: "Lobster", fontSize: "60px" }}>Cake Calculator</h1>
                             <h3>Quoting tool</h3>
-                            {/* <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div> */}
+                            {/* <div className="ui huge primary button">Get Started <i className="right arrow icon"></i></div> */}
                         </div>
                     </div>
-                    <div class="ui vertical stripe segment">
-                        <h4 class="ui horizontal header divider">
-                            <a href="#">Welcome</a>
+                    <div className="ui vertical stripe segment">
+                        <h4 className="ui horizontal header divider">
+                            <span>Welcome</span>
                         </h4>
                         <div className="loginpg">
                             <h3>Login</h3>

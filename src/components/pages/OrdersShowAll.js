@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteOrder, fetchOrders } from "../../actions";
-import { Button, Container, Header, Icon, Item } from 'semantic-ui-react';
+import { Button, Container, Icon, Item } from 'semantic-ui-react';
 import { format, isAfter } from "date-fns";
 
 class OrdersShowAll extends Component {

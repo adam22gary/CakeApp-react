@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { createOrder, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
-import { Field, reduxForm, formValueSelector } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import Input from "./fields/Input";
 import history from "./../../history";
 import { isAfter } from 'date-fns'
 import { Link } from "react-router-dom";
+import { isAfter } from "date-fns";
 
 
 //Form validation
@@ -23,7 +24,8 @@ class OrderForm extends Component {
         total_people: null,
         description: null,
         total_people_new: 0.0,
-        total_price: 0.0
+        total_price: 0.0,
+        base_total_price: 0.0
     }
 
     onFormSubmit = async (formValues) => {
@@ -43,13 +45,17 @@ class OrderForm extends Component {
     getTotalPrice = () => {
         const { ordersNew } = this.props;
         const { total_people_new, total_people } = this.state;
-        let total_price = 0;
-        ordersNew.map((item, index) => {
-          Object.keys(item.ingredients_array).map((theKey, index) => {
-                total_price += (((parseFloat(item.ingredients_array[theKey][3]) / total_people) * total_people_new))
-          })
+        let total_price = 0.0;
+        let base_total_price = 0.0;
+        ordersNew.map((item) => {
+          Object.keys(item.ingredients_array).map((theKey) => {
+                total_price += (((parseFloat(item.ingredients_array[theKey][3]) / total_people) * total_people_new));
+                base_total_price += (parseFloat(item.ingredients_array[theKey][3]));
+                
+
+            })
         })
-        this.setState({total_price: (total_price  * (500 / 100)).toFixed(2)});
+        this.setState({total_price: (total_price  * (500 / 100)).toFixed(2), base_total_price: (base_total_price).toFixed(2)});
     }
 
     componentDidMount() {
@@ -79,7 +85,7 @@ class OrderForm extends Component {
         const minValue5 = minValue(parseInt(this.state.total_people));
 
         const { handleSubmit, ordersNew } = this.props;
-        const { total_people_new, total_people } = this.state;
+        const { total_people_new, total_people, base_total_price, recipe_name, description } = this.state;
         let { total_price } = this.state;
 
         return(<>
@@ -114,8 +120,8 @@ class OrderForm extends Component {
                             type="text"
                         />
                         <label style={{ fontSize: "22px" }}><strong>Please select the ingredients</strong></label>
-                        <table className="ui table" cellpadding="10">
-                            {ordersNew.map((item, index) => {
+                        <table className="ui table" cellPadding="10">
+                            {ordersNew.map((item) => {
                                 return (
                                     <tbody key={item._id}>
                                         <tr>
@@ -139,16 +145,18 @@ class OrderForm extends Component {
                             })}   
                         </table> 
                         <h2>Base cake information:</h2>
-                        <table className="ui table" cellpadding="10">
+                        <table className="ui table" cellPadding="10">
                             <tbody>
-                                <tr><td>Base cake total food cost: ${(parseFloat(total_price) * parseFloat(total_people)).toFixed(2)}</td></tr>
+                                <tr><td>Base cake name: {recipe_name}</td></tr>
                                 <tr><td>Base cake total people: {total_people}</td></tr>
+                                <tr><td>Base cake description: {description}</td></tr>
+                                <tr><td>Base cake total food cost: ${base_total_price}</td></tr>
                             </tbody>
 
                         </table>
                         <h2>Order Costing:</h2>
-                        <table className="ui table" cellpadding="10">
-                            {ordersNew.map((item, index) => {
+                        <table className="ui table" cellPadding="10">
+                            {ordersNew.map((item) => {
                                 return (
                                     <tbody key={item._id}>
                                         <tr><td>Total food cost: ${(parseFloat(total_price) / 5).toFixed(2)}</td></tr>
@@ -201,6 +209,10 @@ const WrappedOrderForm = reduxForm({
 
         if(!formValues.order_description) {
             errors.order_description = "Description le is required";
+        }
+
+        if(isAfter(new Date(), new Date(formValues.due_date))) {
+            errors.due_date = "Must be after today";
         }
         
         return errors;

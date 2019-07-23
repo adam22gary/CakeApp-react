@@ -65,7 +65,7 @@ class BaseCakeEditForm extends Component {
         return(
              //need to send id
              <div className="formclass">
-             <form class="ui form" onSubmit={handleSubmit(this.onFormSubmit)}>
+             <form className="ui form" onSubmit={handleSubmit(this.onFormSubmit)}>
                  <div>
                      <label><strong>Recipe Name</strong></label>
                      <Field
@@ -122,7 +122,7 @@ class BaseCakeEditForm extends Component {
                  <Link to="/basecakes">
                     <span className="ui yellow button">Back</span>
                 </Link>
-                 <button class="ui green button" type="submit">Save</button>
+                 <button className="ui green button" type="submit">Save</button>
                  <div className="clear"></div>
              </form>
          </div>

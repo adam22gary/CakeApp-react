@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteOrder, fetchShowOrders } from "../../actions";
-import { Button, Container, Header, Icon, Item } from 'semantic-ui-react';
 import { format } from "date-fns";
 
 class OrderShow extends Component {
@@ -18,21 +17,11 @@ class OrderShow extends Component {
   
     componentDidMount() {
         this.props.fetchShowOrders(this.props.match.params.id);
-        //this is from ordersNew
-        // const { ordersShow } = this.props;
-        // if (ordersShow && ordersShow.length > 0) {
-        //     this.setState({
-        //         total_people: parseFloat(ordersShow[0].total_people),
-        //         total_people_new: parseFloat(ordersShow[0].total_people_new),
-        //         total_price: parseFloat(ordersShow[0].total_price),
-        //     });
-        // }
-        // console.log(this.props);
     }
 
-    render() {
+    componentDidUpdate() {
         const { ordersShow } = this.props;
-        const { total_people, total_people_new, total_price, onOff } = this.state;
+        const { onOff } = this.state;
 
         //do not update state in render - ask Garret
         if (onOff && ordersShow && ordersShow.length > 0) {
@@ -43,13 +32,18 @@ class OrderShow extends Component {
                 onOff: false
             });
         }
+    }
+
+    render() {
+        const { ordersShow } = this.props;
+        const { total_people, total_people_new, total_price } = this.state;
         
         return (
             <> 
             
              <h2>My order details</h2>
                 <div className="ui piled segment" style={{ backgroundColor: "#ffddf4", marginLeft: "30px", marginRight: "200px" }}>
-                <table className="ui table" cellpadding="10">
+                <table className="ui table" cellPadding="10">
                         {ordersShow.map((item, index) => {
                             return (
                                 <tbody key={item._id}>
@@ -63,7 +57,7 @@ class OrderShow extends Component {
                         })}
                 </table>
                 <h2>The ingredients for this order:</h2>
-                    <table className="ui table" cellpadding="10">
+                    <table className="ui table" cellPadding="10">
                             {ordersShow.map((item, index) => {
                                 return (
                                     <tbody key={item._id}>
@@ -88,7 +82,7 @@ class OrderShow extends Component {
                             })}   
                     </table>
                     <h2>Order Costing:</h2>
-                    <table className="ui table" cellpadding="10">
+                    <table className="ui table" cellPadding="10">
                         {ordersShow.map((item, index) => {
                             return (
                                 <tbody key={item._id}>

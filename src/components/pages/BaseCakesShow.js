@@ -15,12 +15,11 @@ class BaseCakesShow extends Component {
 
     render() {
         const { baseCakes } = this.props;
-        console.log(baseCakes)
         return (
             <>
             <h2>Base cake recipe</h2>
                 <div className="ui piled segment" style={{ backgroundColor: "#ffddf4", marginLeft: "30px", marginRight: "200px" }}>
-                <table className="ui table" cellpadding="10">
+                <table className="ui table" cellPadding="10">
                         {baseCakes.map((item, index) => {
                             return (
                                 <tbody key={item._id}>
@@ -47,7 +46,7 @@ class BaseCakesShow extends Component {
                         })}
                 </table>
                 <h2>The ingredients for this base cake recipe:</h2>
-                    <table className="ui table" cellpadding="10">
+                    <table className="ui table" cellPadding="10">
                             {baseCakes.map((item, index) => {
                                 return (
                                     <tbody key={item._id}>
@@ -63,7 +62,7 @@ class BaseCakesShow extends Component {
                                                         <td>{item.ingredients_array[theKey][0]}</td>
                                                         <td>{item.ingredients_array[theKey][1]}</td>
                                                         <td>{item.ingredients_array[theKey][2]}</td>
-                                                        <td>${item.ingredients_array[theKey][3]}</td>
+                                                        <td>${parseFloat(item.ingredients_array[theKey][3]).toFixed(2)}</td>
                                                     </tr>
                                                 );
                                             })}
