@@ -1,27 +1,279 @@
+#root {
+/* text-align: center; */
+}
 input, label {
     display: block;
 }
 body{
-    background-color: rgb(253, 252, 241);
-    
+    background-color: rgb(255, 255, 255);
 }
 .clear{
     clear: both;
     width: 100%;
     padding: 20px 0;
 } 
+.antonella_padding{
+    clear: both;
+    width: 100%;
+    padding: 5px 0;
+} 
 .homeclass {
     text-align: center;
     margin-top: 200px;
-    /* font-family: "Montserrat", sans-serif; */
-}
-.hometitle{
-    font-family: "Satisfy", sans-serif;
-    font-size: 50px;
-    padding: 20px 0;
 }
 .homeLinks{
-    /* font-family: 'Lobster', cursive; */
     font-size: 20px;
     text-align: center !important;
 }
+.hometitle{
+    font-family: 'Lobster', cursive;
+    font-size: 50px;
+    padding: 20px 0;
+}
+.hidden.menu {
+    display: none;
+}
+.masthead.segment {
+    min-height: 700px;
+    padding: 1em 0em;
+}
+.masthead .logo.item img {
+    margin-right: 1em;
+}
+.masthead .ui.menu .ui.button {
+    margin-left: 0.5em;
+}
+.masthead h1.ui.header {
+    /* margin-top: 3em; */
+    margin-bottom: 0em;
+    font-size: 4em;
+    font-weight: normal;
+}
+.masthead h2 {
+    font-size: 1.7em;
+    font-weight: normal;
+}
+.ui.vertical.stripe {
+    padding: 8em 0em;
+    margin-right: 25px; 
+    margin-left: 25px;
+}
+.ui.vertical.stripe h3 {
+    font-size: 2em;
+}
+.ui.vertical.stripe .button + h3,
+.ui.vertical.stripe p + h3 {
+    margin-top: 3em;
+}
+.ui.vertical.stripe .floated.image {
+    clear: both;
+}
+.ui.vertical.stripe p {
+    font-size: 1.33em;
+}
+.ui.vertical.stripe .horizontal.divider {
+    margin: 3em 0em;
+}
+.quote.stripe.segment {
+    padding: 0em;
+}
+.quote.stripe.segment .grid .column {
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+.ui.inverted.segment,
+.ui.primary.ui.inverted.segment{
+    background: rgb(255, 0, 129); 
+}
+.secondary.pointing.menu .toc.item {
+    display: none;
+}
+@media only screen and (max-width: 700px) {
+    .ui.fixed.menu {
+    display: none !important;
+    }
+    .secondary.pointing.menu .item,
+    .secondary.pointing.menu .menu {
+    display: none;
+    }
+    .secondary.pointing.menu .toc.item {
+    display: block;
+    }
+    .masthead.segment {
+    min-height: 350px;
+    }
+    .masthead h1.ui.header {
+    font-size: 2em;
+    margin-top: 1.5em;
+    }
+    .masthead h2 {
+    margin-top: 0.5em;
+    font-size: 1.5em;
+    }
+}
+@media only screen and (min-width: 700px) {
+.formclass {
+    /* /less is better Antonella */
+    margin-left: 20px;
+    margin-right: 20px;
+    /* margin-left: 100px;
+    margin-right: 400px; */
+}
+}
+@media only screen and (max-width: 700px) {
+.formclass {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+}
+h2 {
+text-align: left;
+margin-left: 45px;
+font-family: "Lobster";
+font-size: 30px;
+}
+@media only screen and (min-width: 800px) {
+.homepageclass {
+margin-left: 200px;
+margin-right: 200px;
+    }
+}
+label {
+margin-top: 20px;
+}
+.ulclass{
+list-style-type: none;
+}
+.text {
+color: #8b6a60;
+font-family: 'Lato', sans-serif;
+font-weight: 300;
+font-style: italic;
+text-align: center;
+}
+.text h1 {
+font-size: 1.4em;
+font-size: 33px;
+}
+a {
+    color: black;
+}
+@media only screen and (min-width: 700px) {
+.selectbasecake {
+    margin-left: 100px;
+    margin-right: 400px;
+}
+}
+@media only screen and (max-width: 700px) {
+.selectbasecake{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+}
+
+  
+
+/* //cake stuff */
+#cake {
+    display: block;
+    position: relative;
+    margin: -10em auto 0 auto;
+   }
+   
+   /* ============================================== Candle
+   */
+   .velas {
+    background: #ffffff;
+    border-radius: 10px;
+    position: absolute;
+    top: 256px;
+    left: 50%;
+    margin-left: -2.4px;
+    margin-top: -8.33333333px;
+    width: 5px;
+    height: 35px;
+    transform: translateY(-300px);
+    backface-visibility: hidden;
+    animation: in 500ms 6s ease-out forwards;
+   }
+   
+   .velas:after,
+   .velas:before {
+    background: rgba(255, 0, 0, 0.4);
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2.22222222px;
+   }
+   
+   .velas:after {
+    top: 25%;
+    left: 0;
+   }
+   
+   .velas:before {
+    top: 45%;
+    left: 0;
+   }
+   
+   /* ============================================== Fire
+   */
+   .fuego {
+    border-radius: 100%;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -2.6px;
+    width: 6.66666667px;
+    height: 18px;
+   }
+   
+   .fuego:nth-child(1) {
+    animation: fuego 2s 6.5s infinite;
+   }
+   
+   .fuego:nth-child(2) {
+    animation: fuego 1.5s 6.5s infinite;
+   }
+   
+   .fuego:nth-child(3) {
+    animation: fuego 1s 6.5s infinite;
+   }
+   
+   .fuego:nth-child(4) {
+    animation: fuego 0.5s 6.5s infinite;
+   }
+   
+   .fuego:nth-child(5) {
+    animation: fuego 0.2s 6.5s infinite;
+   }
+   
+   /* ============================================== Animation Fire
+   */
+   @keyframes fuego {
+    0%, 100% {
+      background: rgba(254, 248, 97, 0.5);
+      box-shadow: 0 0 40px 10px rgba(248, 233, 209, 0.2);
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      background: rgba(255, 50, 0, 0.1);
+      box-shadow: 0 0 40px 20px rgba(248, 233, 209, 0.2);
+      transform: translateY(-20px) scale(0);
+    }
+   }
+   @keyframes in {
+    to {
+      transform: translateY(0);
+    }
+   }
+   .text {
+    color: #8b6a60;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+   }
+   .text h1 {
+    font-size: 1.4em;
+   }

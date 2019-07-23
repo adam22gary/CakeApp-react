@@ -3,6 +3,8 @@ import { createBaseCake, fetchIngredients } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm, change, formValueSelector } from "redux-form";
 import Input from "./fields/Input";
+import history from "./../../history";
+import { Link } from "react-router-dom";
 
 //validation
 const required = value => value ? undefined : 'Required';
@@ -23,25 +25,23 @@ class BaseCakeForm extends Component {
     onFormSubmit = async (formValues) => {
         const { recipe_name, total_people, description } = formValues;
         await this.props.createBaseCake(recipe_name, total_people, description, this.state.ingredients_array);
-        this.props.reset();
-        //clear value after submit
-        this.props.dispatch(change('baseCake', 'ingredients_array', []));
+        //push history
+        history.push("/basecakes");
     }
 
     calculate = (event, id, name, measurement, price) => {
         //clear value first
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
         const getValue = event.target.value;
+        const new_price = getValue * price;
 
         if(getValue === "" || getValue < 0.5){
             delete obj[id];
         }else{
 
-            obj[id]= [getValue, name, measurement, price];        
+            obj[id]= [getValue, name, measurement, new_price];        
                 
         }
-        //for testing display only
-        document.getElementById("forDisplay").innerHTML = obj[0]; 
         //update state
         this.setState({ingredients_array: obj});
         //add value to field
@@ -57,55 +57,69 @@ class BaseCakeForm extends Component {
         const { handleSubmit, ingredients } = this.props;
 
         return(
-            <form onSubmit={handleSubmit(this.onFormSubmit)}>
-                <div>
-                    <label>Name of recipe</label>
-                    <Field
-                        name="recipe_name"
-                        component={Input}
-                        type="text"
-                    />
-                    <label>How many does this recipe make</label>
-                    <Field
-                        name="total_people"
-                        component={Input}
-                        type="number"
-                        validate={[ required, number, minValue5 ]}
-                    />
-                    <label>Description add textarea</label>
-                    <Field
-                        name="description"
-                        component={Input}
-                        type="text"
-                    />
-                    <label>Please select the ingredients</label>
-                    <ul>
-                        {ingredients.map((item, index) => {
-                            return (
-                                <li key={item._id}>
-                                    <label htmlFor={item._id}>{item.ingredients_name}</label>
-                                    <Field
-                                        name={item._id}
-                                        component={Input}
-                                        type="number"
-                                        onChange={(event) => this.calculate(event, item._id, item.ingredients_name, item.ingredients_measurement, item.ingredients_price)}
-                                        validate={[ minValue1 ]}
-                                    />{item.ingredients_measurement}
-                                    <div id={item._id}>${(this.props[item._id] * item.ingredients_price) > 0 ? (this.props[item._id] * item.ingredients_price) : 0}</div>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                    <span id="forDisplay"></span>
-                    <Field
-                        name="ingredients_array"
-                        id="ingredients_array"
-                        component={"input"}
-                        type="hidden"
-                    />
-                </div>
-                <input type="submit" value="Create" />
-            </form>
+            <div className="formclass">
+                <form className="ui form" onSubmit={handleSubmit(this.onFormSubmit)}>
+                    <div>
+                        <label><strong>Recipe Name</strong></label>
+                        <Field
+                            name="recipe_name"
+                            component={Input}
+                            type="text"
+                        />
+                        <label><strong>Number of People</strong></label>
+                        <Field
+                            name="total_people"
+                            component={Input}
+                            type="number"
+                            validate={[required, number, minValue5]}
+                        />
+                        <label><strong>Description</strong></label>
+                        <Field
+                            name="description"
+                            component={Input}
+                            type="text"
+                        />
+                        <label style={{ fontSize: "22px" }}><strong>Please select the ingredients</strong></label>
+                        <div className="clear"></div>
+                        <table className="ulclass">
+                            <tbody>       
+                                {ingredients.map((item, index) => {
+                                    return (
+                                            <tr key={item._id}>
+                                                <td style={{ color: "blue" }}>{item.ingredients_name}</td>
+                                                <td className="fields" style={{ width: "70px", margin: "0 20px 0 20px" }}>
+                                                    <Field
+                                                        name={item._id}
+                                                        component={Input}
+                                                        type="number"
+                                                        onChange={(event) => this.calculate(event, item._id, item.ingredients_name, item.ingredients_measurement, item.ingredients_price)}
+                                                        validate={[ minValue1 ]}
+                                                    />
+                                                </td>
+                                                <td style={{ color: "blue" }}>{item.ingredients_measurement}</td>
+                                                <td style={{ color: "blue" }}> <span id={item._id} style={{margin: "0 30px 0 30px" }}> ${(this.props[item._id] * item.ingredients_price) > 0 ? (this.props[item._id] * item.ingredients_price).toFixed(2) : 0}</span></td>
+
+                                            </tr>
+                                    )
+                                })}
+                            
+​                           </tbody>
+                        </table>
+​
+                        <Field
+                           name="ingredients_array"
+                           id="ingredients_array"
+                           component={"input"}
+                           type="hidden"
+                        />
+                    </div>
+                    <Link to="/basecakes">
+                        <span className="ui yellow button">Back</span>
+                    </Link>
+                    <button className="ui green button" type="submit">Create</button>
+                </form>
+                <div className="clear"></div>
+            </div>
         );
     }
 }
