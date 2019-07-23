@@ -32,7 +32,7 @@ class App extends Component {
                 <>
                 {token && <>
                     <h1 className="hometitle birthday cake icon" style={{ backgroundColor: "#ff0081", color: "white" }}>
-                        <i class="birthday cake icon" style={{ marginBottom: "10px" }}></i>
+                        <i className="birthday cake icon" style={{ marginBottom: "10px" }}></i>
                         Cake Calculator</h1>
                     <button className="ui inverted pink right floated button" style={{ marginRight: "15px"}} onClick={() => this.props.logoutAuthToken()}>Logout</button>
                     <Link to="/">

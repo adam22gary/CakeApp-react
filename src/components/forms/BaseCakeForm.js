@@ -46,7 +46,6 @@ class BaseCakeForm extends Component {
         this.setState({ingredients_array: obj});
         //add value to field
         this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
-        console.log(this.state.ingredients_array);
     }
 
     componentDidMount() {

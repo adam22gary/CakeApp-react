@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchBaseCakes, deleteBaseCake } from "../../actions";
-import { Button, Container, Header, Icon, Item } from 'semantic-ui-react';
+import { Button, Container, Icon, Item } from 'semantic-ui-react';
 
 class BaseCakesPage extends Component {
     defaultState = { data: null, error: null };

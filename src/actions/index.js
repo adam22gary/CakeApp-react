@@ -20,7 +20,6 @@ export const logoutAuthToken = () => {
 
 //basecake Section!!!!!!!!!!!!!!!!!!!!
 export const setBaseCakes = (baseCakes) => {
-    console.log(baseCakes);
     return {
         type: BASECAKES_LIST,
         payload: baseCakes

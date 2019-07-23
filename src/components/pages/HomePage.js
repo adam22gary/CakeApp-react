@@ -16,7 +16,7 @@ class HomePage extends Component {
                                     <h1 style={{ fontSize: "40px", marginTop: "30px", fontFamily: 'Lobster', color: "black", textAlign: "center" }}>
                                         Create a new Order</h1>
                                     <p style={{ color: "#ff0081", fontSize: "20px", textAlign: "center" }}>get started</p>
-                                    <img className="ui medium circular image" src={img2} />
+                                    <img className="ui medium circular image" src={img2} alt="orders" />
                                 </Link>
                             </div>
                         </div>
@@ -27,7 +27,7 @@ class HomePage extends Component {
                                     <h1 style={{ fontSize: "40px", marginTop: "30px", fontFamily: 'Lobster', color: "black", textAlign: "center" }}>
                                         My ingredients</h1>
                                     <p style={{ color: "#ff0081", fontSize: "20px", textAlign: "center" }}>add an ingredient</p>
-                                    <img className="ui medium circular image" src={img2} />
+                                    <img className="ui medium circular image" src={img2} alt="ingredients" />
                                 </Link>
                             </div>
                         </div>
@@ -41,7 +41,7 @@ class HomePage extends Component {
                                     <h1 style={{ fontSize: "40px", marginTop: "30px", fontFamily: 'Lobster', color: "black", textAlign: "center" }}>
                                         Base Cakes Recipes</h1>
                                     <p style={{ color: "#ff0081", fontSize: "20px", textAlign: "center" }}>view all Recipes</p>
-                                    <img className="ui medium circular image" src={img2} />
+                                    <img className="ui medium circular image" src={img2} alt="baseCakes" />
                                 </Link>
                             </div>
                         </div>
@@ -52,7 +52,7 @@ class HomePage extends Component {
                                     <h1 style={{ fontSize: "40px", marginTop: "30px", fontFamily: 'Lobster', color: "black", textAlign: "center" }}>
                                         Orders {`&`} History</h1>
                                     <p style={{ color: "#ff0081", fontSize: "20px", textAlign: "center" }}>view all orders</p>
-                                    <img className="ui medium circular image" src={img2} />
+                                    <img className="ui medium circular image" src={img2} alt="showAll orders" />
                                 </Link>
                             </div>
                         </div>

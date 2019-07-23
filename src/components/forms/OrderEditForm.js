@@ -38,17 +38,9 @@ class BaseCakeEditForm extends Component {
         }else{
             obj[id]= getValue;               
         }
-        //convert to json string
-        // const arrValue = JSON.stringify(obj);
-        // console.log(typeof arrValue);
-        // console.log(arrValue);
-        //for testing display only
-        document.getElementById("forDisplay").innerHTML = obj[0]; 
         //update state
         this.setState({ingredients_array: obj});
-        // console.log(this.state.ingredients_array);
-        //add value to field
-        //this.props.dispatch(change('baseCake', 'ingredients_array', this.state.ingredients_array));
+
 
     }
 
@@ -63,25 +55,12 @@ class BaseCakeEditForm extends Component {
                 //this.setState({ingredients_array[item]:  iii[item]});
             }
             this.setState({ingredients_array:  obj});
-            // console.log(this.state.ingredients_array);
-            // console.log("lllllllllllllllllllll");
             
         }
     }
 
     render() {
-        // console.log(this.state.ingredients_array);
         const { handleSubmit, ingredients } = this.props;
-        // console.log(this.props);
-        //add ingredients to the obj object in calculate onload 
-        // if (editAddIngredientsBaseCakes && Object.keys(editAddIngredientsBaseCakes).length > 0 && this.state.booleanIsOn) {
-        //     const iii = JSON.parse(editAddIngredientsBaseCakes.ingredients_array);
-        //     for(let item in iii){
-        //         obj[item] = iii[item];
-        //     }
-        //     this.setState({booleanIsOn: false});
-        //     console.log("hello");
-        // }
 
         return(
             //need to send id
@@ -93,7 +72,6 @@ class BaseCakeEditForm extends Component {
                         name="recipe_name"
                         component={Input}
                         type="text"
-                        //value={baseCakes.recipe_name}
                     />
                     <label>How many does this recipe make</label>
                     <Field
@@ -126,7 +104,6 @@ class BaseCakeEditForm extends Component {
                             );
                         })}
                     </ul>
-                    <span id="forDisplay"></span>
                     <Field
                         name="ingredients_array"
                         id="ingredients_array"
