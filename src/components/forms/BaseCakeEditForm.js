@@ -60,7 +60,6 @@ class BaseCakeEditForm extends Component {
     }
 
     render() {
-        // console.log(this.state.ingredients_array);
         const { handleSubmit, ingredients } = this.props;
         return(
              //need to send id
