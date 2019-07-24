@@ -39,14 +39,14 @@ class RegisterForm extends Component {
                             <div className="field">
                             <label htmlFor="email">Email</label>
                             <div className="ui left icon input">
-                                <input type="email" value={email} onChange={(event) => this.onInputChange("email", event)} />
+                                <input type="email" value={email} required onChange={(event) => this.onInputChange("email", event)} />
                                 <i className="user icon"></i>
                             </div>
                             </div>
                             <div className="field">
                             <label htmlFor="password">Password</label>
                             <div className="ui left icon input">
-                                <input type="password" value={password} onChange={(event) => this.onInputChange("password", event)} />
+                                <input type="password" value={password} required onChange={(event) => this.onInputChange("password", event)} />
                                 <i className="lock icon"></i>
                             </div>
                             </div>

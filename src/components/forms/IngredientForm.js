@@ -10,7 +10,7 @@ const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 const minValue = min => value =>
   value && value < min ? `Must be at least ${min}` : undefined;
-const minValue1 = minValue(0.5);
+const minValue1 = minValue(1);
 
 class IngredientForm extends Component {
     onFormSubmit = async (formValues) => {

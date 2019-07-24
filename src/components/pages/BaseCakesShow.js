@@ -18,7 +18,7 @@ class BaseCakesShow extends Component {
         return (
             <>
             <h2>Base cake recipe</h2>
-                <div className="ui piled segment" style={{ backgroundColor: "#ffddf4", marginLeft: "30px", marginRight: "200px" }}>
+                <div className="ui piled segment" style={{ backgroundColor: "#ffddf4", margin: "0 auto", width: "85%" }}>
                 <table className="ui table" cellPadding="10">
                         {baseCakes.map((item, index) => {
                             return (

@@ -10,7 +10,7 @@ const required = value => value ? undefined : 'Required';
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 const minValue = min => value =>
   value && value < min ? `Must be at least ${min}` : undefined;
-const minValue1 = minValue(0.5);
+const minValue1 = minValue(1);
 const minValue5 = minValue(5);
 
 // array for ingredients
@@ -33,7 +33,7 @@ class BaseCakeEditForm extends Component {
         this.props.dispatch(change('baseCake', 'ingredients_array', []));
         const getValue = event.target.value;
 
-        if(getValue === "" || getValue < 0.5){
+        if(getValue === "" || getValue < 1){
             delete obj[id];
         }else{
             obj[id]= getValue;               

@@ -79,7 +79,7 @@ class OrderForm extends Component {
         let { total_price } = this.state;
 
         return(<>
-        <div className="ui piled segment" style={{ backgroundColor: "#ffddf4", marginLeft: "30px", marginRight: "200px" }}>
+        <div className="ui piled segment" style={{ backgroundColor: "#ffddf4", margin: "0 auto", width: "85%" }}>
             <div className="formclass">
                 <form className="ui form" onSubmit={handleSubmit(this.onFormSubmit)}>
                     <div>

@@ -169,7 +169,7 @@ class LoginPage extends Component {
                         </div>
                         <div className="ui text container">
                             <h1 className="ui inverted header" style={{ fontFamily: "Lobster", fontSize: "60px" }}>Cake Calculator</h1>
-                            <h3>Quoting tool</h3>
+                            <h3 style={{color: "#fff" }}>Quoting tool</h3>
                             {/* <div className="ui huge primary button">Get Started <i className="right arrow icon"></i></div> */}
                         </div>
                     </div>

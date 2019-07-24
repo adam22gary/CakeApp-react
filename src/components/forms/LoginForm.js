@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 class LoginForm extends Component {
     state = { 
         email: "", 
-        password: "" 
+        password: "",
+        notValid: false
     }
 
     onFormSubmit = (event) => {
@@ -20,7 +21,7 @@ class LoginForm extends Component {
                 this.props.setAuthToken(response.data.token);
                 this.props.history.push("/");
             })
-            .catch(error => console.log(error));
+            .catch(error => this.setState({notValid: true}));
     }
 
     onInputChange = (name, event) => {
@@ -28,7 +29,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { email, password } = this.state;
+        const { email, password, notValid } = this.state;
 
         return (
             <form onSubmit={this.onFormSubmit}> 
@@ -50,6 +51,7 @@ class LoginForm extends Component {
                                 <i className="lock icon"></i>
                             </div>
                             </div>
+                            {notValid ? <div>Email or password in incorrect, please try again</div> : <div></div>}
                             <input className="ui inverted pink submit button" type="submit" value="Login" />
                         </div>
                         </div>
