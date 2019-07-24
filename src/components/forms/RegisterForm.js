@@ -54,7 +54,7 @@ class RegisterForm extends Component {
                         </div>
                         </div>
                         <div className="middle aligned column">
-                            <p>Already have an account?</p>
+                            <p style={{textAlign: "center"}}>Already have an account?</p>
                             <Link to="/login">
                                 <button className="ui inverted pink submit button">Login</button>
                             </Link>

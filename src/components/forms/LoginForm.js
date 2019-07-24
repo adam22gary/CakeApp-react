@@ -56,7 +56,7 @@ class LoginForm extends Component {
                         </div>
                         </div>
                         <div className="middle aligned column">
-                            <p>Need to create an account?</p>
+                            <p style={{textAlign: "center"}}>Need to create an account?</p>
                             <Link to="/register">
                                 <button className="ui inverted pink submit button">Register</button>
                             </Link>
