@@ -10,6 +10,8 @@
 
 ## Project Links
 
+- [Live link](http://mern-project-22.s3-website-ap-southeast-2.amazonaws.com/login)
+
 - [Express Back End](https://github.com/adam22gary/CakeApp-express)
 - [React Front End](https://github.com/adam22gary/CakeApp-react)
 
